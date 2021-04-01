@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IAccountDao">
+
+    <resultMap id="accountUserMap" type="account">
+        <id property="id" column="a_id"/>
+        <result property="uid" column="a_uid"/>
+        <result property="money" column="a_money"/>
+
+        <!--一对一关系实现延迟加载，
+            需要使用select属性：属性值必须是能够 唯一查询 property属性值对应 的属性的类型(javaType属性值对应的类型) 的select标签(mapper标签的namespace属性值.select标签属性值)；
+             column属性：属性值是 唯一查询 property属性值对应的类型(javaType属性值对应的类型) 的数据库查询结果集字段名，以供select属性值 对应的select标签使用；-->
+        <association property="user" javaType="user" select="edu.hebeu.dao.IUserDao.selectUserById" column="a_uid"/>
+    </resultMap>
+
+    <select id="selectAccountAll" resultMap="accountUserMap">
+        SELECT
+            a.id a_id, a.uid a_uid, a.money a_money
+        FROM
+            account a;
+    </select>
+
+    <select id="selectAccountByUID" parameterType="int" resultType="account">
+        SELECT id, uid, money FROM account WHERE uid = #{随便写};
+    </select>
+
+    <select id="selectAccountDim" parameterType="account" resultType="account">
+        SELECT id, uid, money FROM account
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="uid != null">
+                AND uid = #{uid}
+            </if>
+            <if test="money != null">
+                AND money = #{money}
+            </if>
+            ;
+        </where>
+    </select>
+
+</mapper>

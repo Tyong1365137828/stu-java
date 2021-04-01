@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_beanDetail_04/day01_eesy_beanDetail_04.iml" filepath="$PROJECT_DIR$/day01_eesy_beanDetail_04/day01_eesy_beanDetail_04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_beanFactory_02/day01_eesy_beanFactory_02.iml" filepath="$PROJECT_DIR$/day01_eesy_beanFactory_02/day01_eesy_beanFactory_02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_jdbc_01/day01_eesy_jdbc_01.iml" filepath="$PROJECT_DIR$/day01_eesy_jdbc_01/day01_eesy_jdbc_01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_springDependencyInjection_05/day01_eesy_springDependencyInjection_05.iml" filepath="$PROJECT_DIR$/day01_eesy_springDependencyInjection_05/day01_eesy_springDependencyInjection_05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_spring_03/day01_eesy_spring_03.iml" filepath="$PROJECT_DIR$/day01_eesy_spring_03/day01_eesy_spring_03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day02_eesy_accountANDannotationIOC_08/day02_eesy_accountANDannotationIOC_08.iml" filepath="$PROJECT_DIR$/day02_eesy_accountANDannotationIOC_08/day02_eesy_accountANDannotationIOC_08.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day02_eesy_accountANDxmlIOC_07/day02_eesy_accountANDxmlIOC_07.iml" filepath="$PROJECT_DIR$/day02_eesy_accountANDxmlIOC_07/day02_eesy_accountANDxmlIOC_07.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day02_eesy_annotationANDioc_06/day02_eesy_annotationANDioc_06.iml" filepath="$PROJECT_DIR$/day02_eesy_annotationANDioc_06/day02_eesy_annotationANDioc_06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day02_eesy_annotationIOCANDconfigClass_09/day02_eesy_annotationIOCANDconfigClass_09.iml" filepath="$PROJECT_DIR$/day02_eesy_annotationIOCANDconfigClass_09/day02_eesy_annotationIOCANDconfigClass_09.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day03_eesy_accountANDdynamicProxy_10/day03_eesy_accountANDdynamicProxy_10.iml" filepath="$PROJECT_DIR$/day03_eesy_accountANDdynamicProxy_10/day03_eesy_accountANDdynamicProxy_10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day03_eesy_aopBYannotation_13/day03_eesy_aopBYannotation_13.iml" filepath="$PROJECT_DIR$/day03_eesy_aopBYannotation_13/day03_eesy_aopBYannotation_13.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day03_eesy_aopBYxml_12/day03_eesy_aopBYxml_12.iml" filepath="$PROJECT_DIR$/day03_eesy_aopBYxml_12/day03_eesy_aopBYxml_12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day03_eesy_dynamicProxy_11/day03_eesy_dynamicProxy_11.iml" filepath="$PROJECT_DIR$/day03_eesy_dynamicProxy_11/day03_eesy_dynamicProxy_11.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_aopBYannotation_15/day04_eesy_aopBYannotation_15.iml" filepath="$PROJECT_DIR$/day04_eesy_aopBYannotation_15/day04_eesy_aopBYannotation_15.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_aopTXbyAnnotation_17/day04_eesy_aopTXbyAnnotation_17.iml" filepath="$PROJECT_DIR$/day04_eesy_aopTXbyAnnotation_17/day04_eesy_aopTXbyAnnotation_17.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_aopTXbyXML_16/day04_eesy_aopTXbyXML_16.iml" filepath="$PROJECT_DIR$/day04_eesy_aopTXbyXML_16/day04_eesy_aopTXbyXML_16.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_jdbcTemplate_14/day04_eesy_jdbcTemplate_14.iml" filepath="$PROJECT_DIR$/day04_eesy_jdbcTemplate_14/day04_eesy_jdbcTemplate_14.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_programmingTX_19/day04_eesy_programmingTX_19.iml" filepath="$PROJECT_DIR$/day04_eesy_programmingTX_19/day04_eesy_programmingTX_19.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day04_eesy_pureAnnotation_18/day04_eesy_pureAnnotation_18.iml" filepath="$PROJECT_DIR$/day04_eesy_pureAnnotation_18/day04_eesy_pureAnnotation_18.iml" />
+    </modules>
+  </component>
+</project>

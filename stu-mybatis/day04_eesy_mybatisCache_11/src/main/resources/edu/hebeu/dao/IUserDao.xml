@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserDao">
+
+    <!--开启这个映射配置文件支持 二级缓存-->
+    <cache/>
+
+    <update id="updateUser" parameterType="user">
+        UPDATE `user`SET username = #{username}, birthday = #{birthday}, sex = #{sex}, address = #{address} WHERE id = #{id};
+    </update>
+
+    <select id="selectUserAll" resultType="user">
+        SELECT id, username, birthday, sex, address FROM `user`;
+    </select>
+
+    <!--userCache属性：为true时 表示这个方法会开启二级缓存-->
+    <select id="selectUserById" parameterType="int" resultType="user" useCache="true">
+        SELECT id, username, birthday, sex, address FROM `user` WHERE id = #{随便写};
+    </select>
+
+</mapper>

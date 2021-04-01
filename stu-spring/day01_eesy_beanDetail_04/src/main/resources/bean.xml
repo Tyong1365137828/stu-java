@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--spring对bean的管理细节：
+            1、创建bean的三种方式；
+            2、bean对象的作用范围；
+            3、bean对象的生命周期-->
+
+
+    <!--创建bean的三种方式：-->
+    <!--方式一：使用默认构造函数(无参构造函数)创建，如果此类(class属性值对应的全限定类)没有默认的构造函数(无参构造函数)就不能创建；
+        -->
+    <!--<bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl"/>-->
+
+    <!--方式二：使用普通工厂中的实例方法创建对象(使用某个类中的实例方法创建对象，并存入Spring容器)
+            第一个bean标签：获取创建对象的工厂(或者某个类)
+                id属性值：标识这个bean对象；
+                class属性值：这个bean对象创建的是哪个类型；
+            第二个bean标签：通过上面的bean的id值获取创建的 bean，并通过这个bean的方法创建 需要的bean对象
+                id属性值：标识这个bean；
+                factory-bean属性值：指定使用哪个bean标签来获取 对应的类型的对象(通过要获取的bean标签的id属性值获取)；
+                factory-method属性值：指定使用 factory-bean属性值对应的类型 的哪个方法-->
+    <!--<bean id="instanceFactory" class="edu.hebeu.factory.InstanceFactory"/>-->
+    <!--<bean id="accountService" factory-bean="instanceFactory" factory-method="getAccountService"/>-->
+
+    <!--方式三：使用工厂中的静态方法创建对象(使用某个类中的静态方法创建对象并存入Spring容器)-->
+    <!--<bean id="accountService" class="edu.hebeu.factory.InstanceFactory" factory-method="getAccountServiceStatic"/>-->
+
+
+    <!--bean的作用范围
+        bean标签的scope属性：用于指定此bean的作用范围
+            取值：
+                singleton：单例的(默认也是此)        常用
+                prototype：多例的                   常用
+                request：作用于web应用的请求范围
+                session：作用于web应用的会话范围
+                global-session：作用于集群环境(全局环境)的会话范围，当不是集群环境时，它就是session
+    -->
+    <!--<bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl" scope="singleton"/>-->
+
+
+    <!--bean的生命周期
+            单例对象：
+                出生：当容器创建时就出生
+                存在：只要容器存在，对象一直存在
+                死亡：只要容器销毁，对象就消亡
+            多例对象：
+                出生：当使用此对象时由spring创建
+                存在：对象只要在使用过程中就一直存在(活着)
+                死亡：当对象长时间不用且没有别的对象引用时，由Java的垃圾回收器进行回收
+
+        init-method属性值：对应class属性值的类型的方法，该方法被init-method属性指定后，会在对象出生时调用这个方法；
+        destroy-method属性值：对应class属性值的类型的方法，该方法被destroy-method属性指定后，且是单例模式时，会在对象死亡时调用这个方法；
+    -->
+    <bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl"
+          scope="prototype"
+          init-method="init" destroy-method="destroy"/>
+
+</beans>

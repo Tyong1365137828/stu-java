@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties resource="db.properties"/>
+
+    <!--配置实体类所在的包下 的所有实体类注册别名-->
+    <typeAliases>
+        <package name="edu.hebeu.entity"/>
+    </typeAliases>
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.jdbc.driver}"/>
+                <property name="url" value="${mysql.jdbc.url}"/>
+                <property name="username" value="${mysql.jdbc.username}"/>
+                <property name="password" value="${mysql.jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--配置mapper映射文件所在包下 所有mapper文件(xml文件)注册别名-->
+        <package name="edu.hebeu.dao"/>
+    </mappers>
+</configuration>

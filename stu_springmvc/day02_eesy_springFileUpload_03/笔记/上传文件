@@ -1,0 +1,5 @@
+上传文件的必要条件：
+    A、form表单的enctype取值必须是：multipart/form-data   (默认取值是：application/x-www-form-urlencoded)
+        enctype：是表单请求正文的类型;
+    B、method属性值必须是POST;
+    C、提供一个文件选择域：<input type="file" />

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <!--给所有的实体类(entity包下的所有类)注册别名-->
+    <typeAliases>
+        <package name="edu.hebeu.entity"/>
+    </typeAliases>
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+
+            <!--dataSource标签：
+                type属性值表示使用JNDI方式-->
+            <dataSource type="JNDI">
+                <property name="data_source" value="java:comp/env/jdbc/eesy_mybatis"/>
+            </dataSource>
+
+        </environment>
+    </environments>
+
+    <!--标识所有的映射配置文件(dao包下的所有xml文件)-->
+    <mappers>
+        <package name="edu.hebeu.mapper"/>
+    </mappers>
+
+</configuration>

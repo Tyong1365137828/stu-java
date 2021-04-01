@@ -1,0 +1,30 @@
+if标签简介：
+    内含属性：
+        test属性：
+            test属性值作为条件决定if标签内的SQL语句是否拼接，
+            注意：test属性值的条件语法结构是按照SQL语句的，参与判断的属性是 parameterType属性值(Java实体类) 的属性(参与判断的属性名要与对应的Java实体类的属性名一致！)
+
+where标签简介：
+    将所有的WHERE条件放入WHERE标签内，可以代替SQL语句的 WHERE关键字
+
+foreach标签简介；
+    内含属性：
+        collection属性：
+            collection属性值作为遍历的对象(注意类型是List集合)，表示的是 parameterType属性值(Java实体类的属性值) 的属性；
+        open属性：
+            open属性值表示 先拼接到SQL的语句，
+        close属性：
+            close属性值表示 最后拼接到SQL语句，
+        item属性：
+            item属性值代表每次遍历collection属性值的一个元素，并将该元素拼接到open属性值和close属性值的中间
+        separator属性：
+            separator属性值 表示每次拼接item属性值后以separator属性值分割
+        foreach标签内的 #{}内的值：
+            要与 item属性值保持一致！
+        注意：
+            最后拼接的SQL语句部分为：
+                open属性值 每次遍历collection属性值得到的item属性值和每次添加item属性值之后的separator属性值 close属性值
+
+
+if、foreach、等标签内的属性的值 语法结构是MySQL，需要赋值的属性的值是Java对应的实体类的属性名！！！！！！！！！！！！！
+因为其在解析之后会生成对应的SQL语句！！！！

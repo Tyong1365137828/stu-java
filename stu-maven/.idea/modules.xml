@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_mavenParent_02/child_dao/child_dao.iml" filepath="$PROJECT_DIR$/day01_eesy_mavenParent_02/child_dao/child_dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_mavenParent_02/child_service/child_service.iml" filepath="$PROJECT_DIR$/day01_eesy_mavenParent_02/child_service/child_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_mavenParent_02/child_web/child_web.iml" filepath="$PROJECT_DIR$/day01_eesy_mavenParent_02/child_web/child_web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_mavenParent_02/day01_eesy_mavenParent_02.iml" filepath="$PROJECT_DIR$/day01_eesy_mavenParent_02/day01_eesy_mavenParent_02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/day01_eesy_maven_01/day01_eesy_maven_01.iml" filepath="$PROJECT_DIR$/day01_eesy_maven_01/day01_eesy_maven_01.iml" />
+    </modules>
+  </component>
+</project>

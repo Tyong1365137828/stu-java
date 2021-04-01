@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="day01_eesy_beanDetail_04" />
+        <module name="day01_eesy_beanFactory_02" />
+        <module name="day01_eesy_jdbc_01" />
+        <module name="day01_eesy_spring_03" />
+        <module name="day01_eesy_springDependencyInjection_05" />
+        <module name="day02_eesy_accountANDannotationIOC_08" />
+        <module name="day02_eesy_accountANDxmlIOC_07" />
+        <module name="day02_eesy_annotationANDioc_06" />
+        <module name="day02_eesy_annotationIOCANDconfigClass_09" />
+        <module name="day03_eesy_accountANDdynamicProxy_10" />
+        <module name="day03_eesy_aopBYannotation_13" />
+        <module name="day03_eesy_aopBYxml_12" />
+        <module name="day03_eesy_dynamicProxy_11" />
+        <module name="day04_eesy_aopBYannotation_15" />
+        <module name="day04_eesy_aopTXbyAnnotation_17" />
+        <module name="day04_eesy_aopTXbyXML_16" />
+        <module name="day04_eesy_jdbcTemplate_14" />
+        <module name="day04_eesy_programmingTX_19" />
+        <module name="day04_eesy_pureAnnotation_18" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="day01_eesy_beanDetail_04" target="1.5" />
+      <module name="day01_eesy_beanFactory_02" target="1.5" />
+      <module name="day01_eesy_jdbc_01" target="1.5" />
+      <module name="day01_eesy_spring_03" target="1.5" />
+      <module name="day01_eesy_springDependencyInjection_05" target="1.5" />
+      <module name="day02_eesy_accountANDannotationIOC_08" target="1.5" />
+      <module name="day02_eesy_accountANDxmlIOC_07" target="1.5" />
+      <module name="day02_eesy_annotationANDioc_06" target="1.5" />
+      <module name="day02_eesy_annotationIOCANDconfigClass_09" target="1.5" />
+      <module name="day03_eesy_accountANDdynamicProxy_10" target="1.5" />
+      <module name="day03_eesy_aopBYannotation_13" target="1.5" />
+      <module name="day03_eesy_aopBYxml_12" target="1.5" />
+      <module name="day03_eesy_dynamicProxy_11" target="1.5" />
+      <module name="day04_eesy_aopBYannotation_15" target="1.5" />
+      <module name="day04_eesy_aopTXbyAnnotation_17" target="1.5" />
+      <module name="day04_eesy_aopTXbyXML_16" target="1.5" />
+      <module name="day04_eesy_jdbcTemplate_14" target="1.5" />
+      <module name="day04_eesy_programmingTX_19" target="1.5" />
+      <module name="day04_eesy_pureAnnotation_18" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

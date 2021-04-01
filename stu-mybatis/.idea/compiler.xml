@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="day01_eesy_customMybatis_03" />
+        <module name="day01_eesy_mybatis_01" />
+        <module name="day01_eesy_mybatis_02" />
+        <module name="day02_eesy_mybatisCRUD_04" />
+        <module name="day02_eesy_mybatisDaoImpl_05" />
+        <module name="day02_eesy_otherLabel_06" />
+        <module name="day03_eesy_JNDI_09" />
+        <module name="day03_eesy_mybatisDataSourceANDTx_07" />
+        <module name="day03_eesy_mybatisMultiTableOperation_08" />
+        <module name="day04_eesy_mybatisAnnotationDevelopment_12" />
+        <module name="day04_eesy_mybatisCache_11" />
+        <module name="day04_eesy_mybatisLoad_10" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="day01_eesy_customMybatis_03" target="1.5" />
+      <module name="day01_eesy_mybatis_01" target="1.5" />
+      <module name="day01_eesy_mybatis_02" target="1.5" />
+      <module name="day02_eesy_mybatisCRUD_04" target="1.5" />
+      <module name="day02_eesy_mybatisDaoImpl_05" target="1.5" />
+      <module name="day02_eesy_otherLabel_06" target="1.5" />
+      <module name="day03_eesy_JNDI09" target="1.7" />
+      <module name="day03_eesy_JNDI_09" target="1.7" />
+      <module name="day03_eesy_mybatisDataSourceANDTx_07" target="1.5" />
+      <module name="day03_eesy_mybatisMultiTableOperation_08" target="1.5" />
+      <module name="day04_eesy_mybatisAnnotationDevelopment_12" target="1.5" />
+      <module name="day04_eesy_mybatisCache_11" target="1.5" />
+      <module name="day04_eesy_mybatisLoad_10" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/day01_eesy_jdbc_01/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_factory_02/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_beanFactory_02/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_spring_03/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_beanDetail_04/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_springDependencyInjection/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_springDependencyInjection_05/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_annotationANDioc_06/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_accountANDxmlIOC_07/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_accountANDannotationIOC_08/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_annotationIOCANDnoxml_09/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_annotationIOCANDconfigClass_09/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_account_10/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_dynamicProxy_11/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_accountANDdynamicProxy_10/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_aop_12/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_aopBYxml_12/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_aopBYannotation/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_aopBYannotation_13/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_jdbcTemplate_14/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_aopBYannotation_15/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_aopTXbyXML_16/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_aopTXbyAnnotation_17/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_pureAnnotation_18/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_programmingTX_19/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

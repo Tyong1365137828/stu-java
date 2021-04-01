@@ -1,0 +1,222 @@
+package edu.hebeu.custom_mybatis.util;
+
+import edu.hebeu.custom_mybatis.annotation.Select;
+import edu.hebeu.custom_mybatis.cfg.Configuration;
+import edu.hebeu.custom_mybatis.cfg.Mapper;
+import edu.hebeu.custom_mybatis.io.Resources;
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author 黑马程序员
+ * @Company http://www.ithiema.com
+ *  用于解析配置文件
+ */
+public class XMLConfigBuilder {
+
+
+
+    /**
+     * 解析主配置文件，把里面的内容填充到DefaultSqlSession所需要的地方
+     * 使用的技术：
+     *      dom4j+xpath
+     */
+    public static Configuration loadConfiguration(InputStream config){
+        try{
+            //定义封装连接信息的配置对象（mybatis的配置对象）
+            Configuration cfg = new Configuration();
+
+            //1.获取SAXReader对象
+            SAXReader reader = new SAXReader();
+            //2.根据字节输入流获取Document对象
+            Document document = reader.read(config);
+            //3.获取根节点
+            Element root = document.getRootElement();
+            //4.使用xpath中选择指定节点的方式，获取所有property节点
+            List<Element> propertyElements = root.selectNodes("//property"); // 找到 property标签
+            //5.遍历节点
+            for(Element propertyElement : propertyElements){
+                //判断节点是连接数据库的哪部分信息
+                //取出name属性的值
+                String name = propertyElement.attributeValue("name");
+                if("driver".equals(name)){
+                    //表示驱动
+                    //获取property标签value属性的值
+                    String driver = propertyElement.attributeValue("value");
+                    cfg.setDriver(driver);
+                }
+                if("url".equals(name)){
+                    //表示连接字符串
+                    //获取property标签value属性的值
+                    String url = propertyElement.attributeValue("value");
+                    cfg.setUrl(url);
+                }
+                if("username".equals(name)){
+                    //表示用户名
+                    //获取property标签value属性的值
+                    String username = propertyElement.attributeValue("value");
+                    cfg.setUsername(username);
+                }
+                if("password".equals(name)){
+                    //表示密码
+                    //获取property标签value属性的值
+                    String password = propertyElement.attributeValue("value");
+                    cfg.setPassword(password);
+                }
+            }
+            //取出mappers中的所有mapper标签，判断他们使用了resource还是class属性
+            List<Element> mapperElements = root.selectNodes("//mappers/mapper"); // 获取SqLMapConfig.xml 文件的 <mappers/>内的<mapper/>标签
+            //遍历集合
+            for(Element mapperElement : mapperElements){
+                //判断mapperElement使用的是哪个属性
+                Attribute attribute = mapperElement.attribute("resource"); // 获取 <mapper/>标签的 resource属性
+                if(attribute != null){ // 如果 resource属性存在，则使用的是 xml配置文件方式
+                    System.out.println("使用的是XML");
+                    //表示有resource属性，用的是XML
+                    //取出属性的值
+                    String mapperPath = attribute.getValue();//获取 resource属性 的值"edu/hebeu/dao/IUserDao.xml"
+                    //把映射配置文件的内容获取出来，封装成一个map
+                    Map<String, Mapper> mappers = loadMapperConfiguration(mapperPath);
+                    //给configuration中的mappers赋值
+                    cfg.setMappers(mappers);
+                }else{ // 否则，即没有 resource属性，表示使用注解方式
+                    System.out.println("使用的是注解");
+                    //表示没有resource属性，用的是注解
+                    //获取class属性的值
+                    String daoClassPath = mapperElement.attributeValue("class");
+                    //根据daoClassPath获取封装的必要信息
+                    Map<String,Mapper> mappers = loadMapperAnnotation(daoClassPath);
+                    //给configuration中的mappers赋值
+                    cfg.setMappers(mappers);
+                }
+            }
+            //返回Configuration
+            return cfg;
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }finally{
+            try {
+                config.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 根据传入的参数，解析映射配置文件XML，并且封装到Map中(因为Map类型的集合查询速度相较于List集合快)
+     * @param mapperPath    映射配置文件的位置
+     * @return  map中包含了获取的唯一标识（key是由dao的全限定类名和方法名组成）
+     *          以及执行所需的必要信息（value是一个Mapper对象，里面存放的是执行的SQL语句和要封装的实体类全限定类名）
+     */
+    private static Map<String,Mapper> loadMapperConfiguration(String mapperPath)throws IOException {
+        InputStream in = null;
+        try{
+            //定义返回值对象
+            Map<String,Mapper> mappers = new HashMap<String,Mapper>();
+            //1.根据路径获取字节输入流
+            in = Resources.getResourceAsStream(mapperPath);
+            //2.根据字节输入流获取Document对象
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(in);
+            //3.获取根节点
+            Element root = document.getRootElement();
+            //4.获取根节点的namespace属性取值
+            String namespace = root.attributeValue("namespace");//取出 根标签的 namespace属性 的内容，是组成map中key的部分
+            //5.获取所有的select节点
+            List<Element> selectElements = root.selectNodes("//select"); // 找到映射配置文件的 <select/>标签
+            //6.遍历select节点集合
+            for(Element selectElement : selectElements){
+                //取出id属性的值      组成map中key的部分
+                String id = selectElement.attributeValue("id"); // 取出 <select/>标签 的id属性 的内容
+                //取出resultType属性的值  组成map中value的部分
+                String resultType = selectElement.attributeValue("resultType"); // 取出 <select/>标签 的resultType属性 的内容
+                //取出文本内容            组成map中value的部分
+                String queryString = selectElement.getText(); // 获取 <select/>标签 的文本内容(value属性 的内容)
+                //创建Key
+                String key = namespace+"."+id;
+//                System.out.println("key = " + key);
+                //创建Value
+                Mapper mapper = new Mapper();
+                mapper.setQueryString(queryString);
+                mapper.setResultType(resultType);
+                //把key和value存入mappers中
+                mappers.put(key,mapper);
+            }
+            return mappers;
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }finally{
+            in.close();
+        }
+    }
+
+    /**
+     * 根据传入的参数，得到dao中所有被select注解标注的方法。
+     * 根据方法名称和类名，以及方法上注解value属性的值，组成Mapper的必要信息
+     * @param daoClassPath
+     * @return
+     */
+
+    private static Map<String,Mapper> loadMapperAnnotation(String daoClassPath)throws Exception{
+        //定义返回值对象
+        Map<String,Mapper> mappers = new HashMap<String, Mapper>();
+
+        //1.得到dao接口的字节码对象
+        Class daoClass = Class.forName(daoClassPath);
+        //2.得到dao接口中的方法数组(所有的方法)
+        Method[] methods = daoClass.getMethods();
+        //3.遍历Method数组
+        for(Method method : methods){
+            //取出每一个方法，判断是否有select注解
+            boolean isAnnotated = method.isAnnotationPresent(Select.class);
+            if(isAnnotated){ // 如果有Select注解
+                //创建Mapper对象
+                Mapper mapper = new Mapper();
+                //取出注解的value属性值
+                Select selectAnno = method.getAnnotation(Select.class); // 获取方法上的注解对象
+                String queryString = selectAnno.value(); // 获取注解对象的value属性值(SQL语句)
+                mapper.setQueryString(queryString); // 将SQL语句放到Mapper类型的对象上
+                //获取当前方法的返回值，还要求必须带有泛型信息
+                Type type = method.getGenericReturnType();//List<User>
+                //判断type是不是参数化的类型
+                if(type instanceof ParameterizedType){
+                    //强转
+                    ParameterizedType ptype = (ParameterizedType)type;
+                    //得到参数化类型中的实际类型参数(为什么使用数组？因为 集合<泛型>，如果集合是Map类型，那么就有两个泛型。所以数组是最好的选择)
+                    Type[] types = ptype.getActualTypeArguments();
+                    //取出第一个泛型
+                    Class domainClass = (Class)types[0];
+                    //获取domainClass的类名
+                    String resultType = domainClass.getName();
+                    //给Mapper赋值
+                    mapper.setResultType(resultType);
+                }
+                //组装key的信息
+                //获取方法的名称
+                String methodName = method.getName();
+                String className = method.getDeclaringClass().getName();
+                String key = className+"."+methodName;
+                //给map赋值
+                mappers.put(key,mapper);
+            }
+        }
+        return mappers;
+    }
+
+
+
+
+}

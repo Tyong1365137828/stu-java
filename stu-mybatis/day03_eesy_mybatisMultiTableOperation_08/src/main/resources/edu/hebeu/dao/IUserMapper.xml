@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserMapper">
+
+    <!--具体参考一对一例子(IAccountMapper.xml文件内的resultType)-->
+    <resultMap id="userAccountMap" type="user">
+        <id property="id" column="u_id"/>
+        <result property="username" column="u_username"/>
+        <result property="birthday" column="u_birthday"/>
+        <result property="sex" column="u_sex"/>
+        <result property="address" column="u_address"/>
+
+        <!--注意：通过分析查询结果集的两个实体类是 一对多 的，所以使用：collection标签;
+            property属性值：定义type属性值 对应类型中的 属性名(注意：该属性值 是一个实体类做泛型的List集合对象)；
+            ofType属性值：表示 property属性值 对应的 List集合的泛型 是何种类型，
+                写法是实体类的全限定类名(即包括包名，如：edu.hebeu.entity.Account)；
+                因为SqlMapConfig.xml(主配置文件)已经将实体类配置了别名，所以可以用别名 account；-->
+        <collection property="accounts" ofType="account">
+            <id property="id" column="a_id"/>
+            <result property="uid" column="a_uid"/>
+            <result property="money" column="a_money"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="userRoleMap" type="user">
+        <id property="id" column="u_id"/>
+        <result property="username" column="u_username"/>
+        <result property="birthday" column="u_birthday"/>
+        <result property="sex" column="u_sex"/>
+        <result property="address" column="u_address"/>
+
+        <!--通过分析，查询出的结果集为多对多关系-->
+        <collection property="roles" ofType="role">
+            <id property="id" column="r_id"/>
+            <result property="role_name" column="r_role_name"/>
+            <result property="role_desc" column="r_role_desc"/>
+        </collection>
+    </resultMap>
+
+    <sql id="defaultSelect">
+        SELECT id, username, birthday, sex, address FROM user
+    </sql>
+
+    <select id="selectUserAll" resultType="user">
+        <include refid="defaultSelect"/>;
+    </select>
+
+    <select id="selectUserAllOM" resultMap="userAccountMap">
+        SELECT
+            u.id u_id, u.username u_username, u.birthday u_birthday,
+            u.sex u_sex, u.address u_address,
+            a.id a_id, a.uid a_uid, a.money a_money
+        FROM
+            `user` u
+        LEFT OUTER JOIN
+            account a
+        ON
+            u.id = a.uid;
+    </select>
+
+    <select id="selectUserAllMM" resultMap="userRoleMap">
+        SELECT
+            u.id u_id, u.username u_username, u.birthday u_birthday,
+                u.sex u_sex, u.address u_address,
+            r.id r_id, r.role_name r_role_name, r.role_desc r_role_desc
+        FROM
+            `user` u
+        LEFT OUTER JOIN user_role ur ON ur.uid = u.id
+        LEFT OUTER JOIN role r ON r.id = ur.rid;
+    </select>
+
+</mapper>

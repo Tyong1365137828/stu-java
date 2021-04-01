@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--spring的依赖注入：
+            依赖注入：Dependency Injection；
+
+            IOC的作用：降低程序间的耦合(依赖关系)；
+
+            即将依赖关系的管理以后都交给spring来维护，在当前类需要使用其他类对象时，由spring为我们提供，
+            我们只需要在xml配置文件中说明依赖关系的维护，此时就称为依赖注入！
+
+            依赖注入：
+                能住人的数据(三类)：
+                    1、基本类型和String
+                    2、其他bean类型(在配置文件中或注解配置过的bean)
+                    3、复杂类型/集合类型
+                注入的方式(三种)：
+                    1、使用构造方法提供
+                    2、使用set方法提供
+                    3、使用注解提供
+    -->
+
+    <!--使用默认的构造函数注入-->
+    <!--<bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl"/>-->
+
+    <!--使用构造函数注入
+            使用constructor-arg标签；
+            在什么位置使用：在bean标签的内部；
+            constructor-arg标签中的属性：
+                用于指定给构造函数的哪个参数赋值的属性(3个)：
+                    type：用于指定要注入的数据 的数据类型，该数据类型也是构造函数的 某个或某些参数的类型；(注意：如果构造函数中有两个参数一样的类型，这个属性就看不出来给谁注入了！！！)
+                    index：用于指定要注入的数据 给构造函数中 指定索引的位置的参数赋值；从0开始以1递增；
+                    name：用于指定要注入的数据 给构造函数中 指定名称的参数赋值；
+                用于给某个参数赋值的属性：
+                    value：用于提供String类型和基本类型的 数据
+                    ref：用于指定其他的 bean类型的数据(指在SpringIOC的核心容器中出现的 bean对象)，引用关联的bean对象(通过 需要关联的 bean标签的id值引用)；
+
+                优势：
+                    在获取某些bean对象时，注入数据是必须的操作，否则对象无法创建成功；
+                缺点：
+                    改变了bean对象的实例化方式，使我们在创建对象时，如果用不到这些数据也必须提供；
+    -->
+    <bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl">
+        <constructor-arg name="name" value="testName"/>
+        <constructor-arg name="age" value="20"/>
+        <constructor-arg name="birthday" ref="date"/>
+    </bean>
+    <bean id="date" class="java.util.Date"/>
+
+
+
+    <!--通过set()方法注入             此方式更常使用
+            使用property标签；
+            在什么位置使用：bean标签的内部；
+            property标签的属性：
+                name：用于指定注入时所调用的set方法名称(注意：是去掉"set"，并将首字母转为小写后的名称！！！如：调用set方法为setUserName()名字，此时name属性值就是：userName)
+                value：用于提供String类型和基本类型的 数据
+                ref：用于指定其他的 bean类型的数据(指在SpringIOC的核心容器中出现的 bean对象)，引用关联的bean对象(通过 需要关联的 bean标签的id值引用)；
+
+            优点：
+                创建对象时没有明确的限制，可以直接使用默认构造函数；
+            缺点：
+                如果有某个成员必须有值，则获取对象时有可能set方法没有执行；
+    -->
+    <bean id="accountService2" class="edu.hebeu.service.impl.IAccountServiceImpl2">
+        <property name="userName" value="通过set注入"/>
+        <property name="userAge" value="20"/>
+        <property name="userBirthday" ref="date"/>
+    </bean>
+
+
+
+    <!--复杂类型/数组、集合等类型的注入-->
+    <bean id="accountService3" class="edu.hebeu.service.impl.IAccountServiceImpl3">
+        <!--在property标签内使用其他的对应复杂类型的标签注入;
+                用于给List集合注入使用的标签：
+                    list、array、set
+                用于给Map集合注入使用的标签：
+                    map、props
+                结论：结构相同，标签可以互换；
+
+        -->
+        <!--注入数组类型的属性-->
+        <property name="myStrings">
+            <array>
+                <value>String1</value>
+                <value>String2</value>
+                <value>String3</value>
+                <value>String4</value>
+            </array>
+        </property>
+
+        <!--注入List集合类型的属性-->
+        <property name="myList">
+            <list>
+                <value>List1</value>
+                <value>List2</value>
+                <value>List3</value>
+                <value>List4</value>
+            </list>
+        </property>
+
+        <!--注入Set集合类型的属性-->
+        <property name="mySet">
+            <set>
+                <value>Set1</value>
+                <value>Set2</value>
+                <value>Set3</value>
+            </set>
+        </property>
+
+        <!--注入Map集合类型的属性-->
+        <property name="myMap">
+            <map>
+                <entry key="MapKey1" value="MapValue1"/>
+                <entry key="MapKey2">
+                    <value>MapValue2</value>
+                </entry>
+                <entry key="MapKey3" value="MapValue3"/>
+                <entry key="MapKey4" value="MapValue4"/>
+            </map>
+        </property>
+
+        <!--注入Properties集合类型的属性-->
+        <property name="myProperties">
+            <props>
+                <prop key="PropertiesKey1">PropertiesValue1</prop>
+                <prop key="PropertiesKey2">PropertiesValue2</prop>
+                <prop key="PropertiesKey3">PropertiesValue3</prop>
+                <prop key="PropertiesKey4">PropertiesValue4</prop>
+            </props>
+        </property>
+
+    </bean>
+
+</beans>

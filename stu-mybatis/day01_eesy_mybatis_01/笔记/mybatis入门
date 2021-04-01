@@ -1,0 +1,33 @@
+mybatis环境搭建：
+    第一步：创建maven工程并导入坐标；
+    第二步：创建实体类和dao的接口；
+    第三步：创建mybatis的主配置文件：SqlMapConfig.xml；
+    第四步：创建映射配置文件，如：IUserDao.xml；
+
+
+    环境搭建的注意事项：
+        第一个：创建IUserDao.xml和IUserDao.java是为了和我们之前的知识保持一致；在mybatis中持久层的操作接口名称和映射文件也叫Mapper，
+            所以，IUserDao和IUserMapper是一样的；
+            但是注意：接口类的名称要与对应的映射文件名称一样！！！(如 IUserDao接口类 对应 IUserDao.xml映射文件 而非IUserMapper.xml映射文件；
+            IUserMapper接口类 对应 IUserMapper.xml映射文件 而非 IUserDao.xml文件！！！)
+        第二个：在idea中创建目录时，它和包是不一样的，
+            包创建时：edu.hebeu.tyong是三级目录；
+            目录创建时：edu.hebeu.tyong是一级目录；
+        第三个；mybatis的映射配置文件位置必须和dao接口的包结构相同；
+        第四个：映射配置文件的mapper标签namespace属性的取值必须是dao接口的全限定类名；
+        第五个：映射配置文件的操作配置(select等)，id属性的取值必须是dao接口的方法名；
+
+        当我们尊崇了第三、四、五点之后，我们就无需再写dao实现类了；
+
+
+        入门案例：
+            测试的步骤：
+                第一步：读取配置文件
+                第二步：创建SqlSessionFactory对象(通过SqlSessionFactoryBuilder对象的build(InputStream字节流对象)方法创建)
+                第三步：创建SqlSession对象(通过SqlSessionFactory对象的openSession()方法创建)
+                第四步：创建Dao接口的代理对象(通过SqlSession对象的getMapper(Dao接口类的class形式)方法创建)
+                第五步：执行Dao中的方法
+                第六步：释放资源
+                注意：xml文件配置时不要忘记告知封装到哪个实体类中；配置方式：指定实体类的全限定类名；
+                    mybatis是支持写Dao实现类的！
+

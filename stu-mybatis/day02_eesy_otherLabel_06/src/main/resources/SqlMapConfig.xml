@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--
+        resource属性：
+            连接的数据库信息(通过类路径下的 db.properties文件读取),
+            读取此文件成功后，一个等式就是properties标签内的一个property标签；
+            等式左边做key成为property标签的name属性值，等式右边做value成为property标签的value属性值；
+            须知：也可以不适用resource或url读取，可以直接在properties标签内自己定义property标签并赋予必要的值！！！
+        url属性：
+            读取数据库信息(通过 URL的方式读取)，要求用 URL 的方式来写；
+
+            URL: Uniform Resource Locator 统一资源定位符，它可以唯一识一个资源的位置，
+                写法：协议 主机 端口 URI
+                URI: Uniform Resource Identifier 统一资源标识符，它是在应用中可以唯一定位一个资源；
+            -->
+    <properties resource="db.properties"/>
+
+    <!--typeAliases标签：用来配置实体类的别名；
+        但是注意：只能配置entity内类(实体类)的别名-->
+    <typeAliases>
+        <!--typeAlias标签：指定某一个实体类的别名
+                type属性值：实体类的全限定类名；
+                alias属性值：type属性指定的实体类的别名
+                注意：当指定了别名就不在区分大小写了！！！在此文件(主配置文件)配置之后，
+                所有的映射配置文件(在本文件的mappers标签内xml配置的文件)的任何标签都可以使用-->
+        <!--<typeAlias type="edu.hebeu.entity.User" alias="user"/>-->
+        
+        <!--package标签：用于指定要配置别名的包，当指定之后该包下的实体类都会注册别名，并且类名就是别名；
+                name属性：指定起别名的存放实体类所在的包路径；
+            注意：此时不在区分大小写，-->
+        <package name="edu.hebeu.entity"/>
+    </typeAliases>
+
+    <!--配置环境，默认为mysql-->
+    <environments default="mysql">
+        <!--配置mysql环境-->
+        <environment id="mysql">
+            <!--配置事务-->
+            <transactionManager type="JDBC"/>
+            <!--配置连接池-->
+            <dataSource type="POOLED">
+                <!--当文件中有 properties标签时，property标签的value值应该与对应的properties标签内的property标签的name属性值保持一致！！！-->
+                <property name="driver" value="${mysql.jdbc.driver}"/>
+                <property name="url" value="${mysql.jdbc.url}"/>
+                <property name="username" value="${mysql.jdbc.username}"/>
+                <property name="password" value="${mysql.jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--配置映射文件的位置-->
+    <mappers>
+        <!--指定一个dao接口类的xml文件的位置
+                resource属性值：指定 一个dao接口 对应的 一个xml文件 所在的路径-->
+        <!--<mapper resource="edu/hebeu/dao/IUserDao.xml"/>-->
+
+        <!--指定一个dao接口的位置，注意这种方式针对于注解，对 xml文件方式无效
+                class属性值：指定一个dao接口类 所在的路径-->
+        <!--<mapper class="edu.hebeu.dao.IUserDao"/>-->
+
+        <!--用来配置dao接口所在的包，配置之后就不用写 多个mapper标签来指定dao对应的 xml文件了;
+                name属性值：指定dao接口所在的包路径；-->
+        <package name="edu.hebeu.dao"/>
+    </mappers>
+</configuration>

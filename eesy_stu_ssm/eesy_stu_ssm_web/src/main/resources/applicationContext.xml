@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--配置扫描 dao和service层的注解-->
+    <context:component-scan base-package="edu.hebeu.service"/>
+    <context:component-scan base-package="edu.hebeu.dao"/>
+
+    <!-- 扫描dao接口 -->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="edu.hebeu.dao"/>
+    </bean>
+
+    <!-- 配置Spring的声明式事务管理 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--进行mybatis的整合-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!-- 把交给IOC管理 SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+            <!-- 部分mybatis插件的配置 -->
+            <property name="plugins">
+                <array>
+                    <!--配置PageHelper分页插件-->
+                    <bean class="com.github.pagehelper.PageInterceptor">
+                        <property name="properties">
+                            <!--使用下面的方式配置参数，一行配置一个 -->
+                            <props>
+                                <!--指明底层数据库-->
+                                <prop key="helperDialect">oracle</prop>
+                                <!--合理化页数-->
+                                <prop key="reasonable">true</prop>
+                            </props>
+                        </property>
+                    </bean>
+                </array>
+            </property>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${oracle.jdbc.driver}" />
+        <property name="jdbcUrl" value="${oracle.jdbc.url}" />
+        <property name="user" value="${oracle.jdbc.username}" />
+        <property name="password" value="${oracle.jdbc.password}" />
+    </bean>
+
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="child_dao" />
+        <module name="child_service" />
+        <module name="child_web" />
+        <module name="day01_eesy_maven_01" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="child_dao" target="1.5" />
+      <module name="child_service" target="1.5" />
+      <module name="child_web" target="1.5" />
+      <module name="day01_eesy_maven_01" target="1.5" />
+      <module name="day01_eesy_mavenParent_02" target="1.5" />
+      <module name="parent_dao" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

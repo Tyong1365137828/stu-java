@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserDao">
+
+    <resultMap id="userAccountsMap" type="user">
+        <id property="id" column="u_id"/>
+        <result property="username" column="u_username"/>
+        <result property="birthday" column="u_birthday"/>
+        <result property="sex" column="u_sex"/>
+        <result property="address" column="u_address"/>
+
+        <!--一对多实现延迟加载：
+            需要使用select属性：属性值必须是能通过数据库查询结果集字段 做的条件 查询出多个 property属性值对应的类型(ofType属性值对应的类型)；
+            column属性：属性值是 select属性值对应的 select标签的 SELECT ... 语句的条件，该条件 对应的 数据库查询结果集的字段
+            -->
+        <collection property="accounts" ofType="account" select="edu.hebeu.dao.IAccountDao.selectAccountByUID" column="u_id"/>
+    </resultMap>
+
+    <select id="selectUserAll" resultMap="userAccountsMap">
+        SELECT
+            u.id u_id, u.username u_username, u.birthday u_birthday,
+            u.sex u_sex, u.address u_address,
+            a.id a_id, a.uid a_uid, a.money a_money
+        FROM
+            `user` u
+        LEFT OUTER JOIN
+            account a
+        ON
+            u.id = a.uid;
+    </select>
+
+    <select id="selectUserById" parameterType="int" resultType="user">
+        SELECT id, username, birthday, sex, address FROM `user` WHERE id = #{随便写};
+    </select>
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--使用注解配置IOC时的注意事项：
+            使用注解时的约束：
+                <?xml version="1.0" encoding="UTF-8"?>
+                <beans xmlns="http://www.springframework.org/schema/beans"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:context="http://www.springframework.org/schema/context"
+                       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+                </beans>
+    -->
+
+    <!--配置此会扫描edu.hebeu.service.impl 包及其子包 下的所有类或接口上的注解(找到SpringIOC的注解)-->
+    <context:component-scan base-package="edu.hebeu"/>
+
+</beans>

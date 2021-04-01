@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserDao">
+    <insert id="insertUser" parameterType="edu.hebeu.entity.User">
+        <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO user(username, birthday, sex, address) VALUES(#{username}, #{birthday}, #{sex}, #{address});
+    </insert>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM user WHERE id = #{随便写};
+    </delete>
+
+    <update id="updateUser" parameterType="edu.hebeu.entity.User">
+        UPDATE user SET username = #{username}, birthday = #{birthday}, sex = #{sex}, address = #{address} WHERE id = #{id};
+    </update>
+
+    <select id="selectUserAll" resultType="edu.hebeu.entity.User">
+        SELECT id, username, birthday, sex, address FROM user;
+    </select>
+
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="edu.hebeu.entity.User">
+        SELECT id, username, birthday, sex, address FROM user WHERE id = #{随便写};
+    </select>
+
+    <select id="selectUserTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM user;
+    </select>
+
+    <select id="selectUserByVoDim" parameterType="edu.hebeu.entity.UserVo" resultType="edu.hebeu.entity.User">
+        SELECT id, username, birthday, sex, address
+        FROM user
+        WHERE username LIKE CONCAT('%', #{user.username}, '%');
+    </select>
+
+</mapper>

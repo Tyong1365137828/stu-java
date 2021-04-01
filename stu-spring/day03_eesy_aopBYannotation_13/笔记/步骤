@@ -1,0 +1,29 @@
+步骤1、导入约束，xml文件中导入约束：
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:aop="http://www.springframework.org/schema/aop"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+    </beans>
+
+步骤2、配置Spring创建容器时要扫描的包，xml配置文件中添加标签：
+        <context:component-scan base-package="包名"/>
+配置Spring开启注解AOP的支持，xml配置文件中添加标签：
+    <aop:aspectj-autoproxy/>
+
+步骤3、使用注解(@Aspect)标注切面类
+
+步骤4、切面类内部定义一个方法，并将该方法使用 @Pointcut("切面点表达式")标注
+
+步骤5、使用注解标注通知的类型(前置、后置、异常、最终、环绕)，这些通知就是该切面类内的实例方法;
+    如：@Before(被@PointCut("切面点表达式")标注的方法名()) // 被标注的方法为前置通知
+        @AfterReturning(被@PointCut("切面点表达式")标注的方法名()) // 被标注的方法为后置通知
+        @AfterThrowing(被@PointCut("切面点表达式")标注的方法名()) // 被标注的方法为异常通知
+        @After(被@PointCut("切面点表达式")标注的方法名()) // 被标注的方法为最终通知
+        @Around(被@PointCut("切面点表达式")标注的方法名()) // 被标注的方法为环绕通知

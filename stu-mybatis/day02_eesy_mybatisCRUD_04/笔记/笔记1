@@ -1,0 +1,20 @@
+mybatis中 parameterType属性可以传递哪些类型？
+    1、传递简单类型
+    2、传递pojo对象(javaBean对象)
+        mybatis使用 OGNL表达式解析对象字段值，#{}或${}括号中的值为 pojo属性名称
+    3、传递pojo包装对象(javaBean对象)
+
+
+OGNL表达式：
+    Object Graphic Navigation Language
+     对象     图      导航       语言
+     它是通过对象的取值方法获取数据，在写法上把get省略了，
+     如：获取用户的名称：
+        类中的写法：user.getName();
+        OGNL表达式的写法：user.name
+
+
+mybatis为什么能直接写属性名(如：username)，而不用写 user. ?
+    因为在parameterType已经提供了属性所属的类，所以此时不用写 对象.
+
+

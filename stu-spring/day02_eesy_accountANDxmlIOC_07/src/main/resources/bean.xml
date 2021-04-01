@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置Service层(业务层)-->
+    <bean id="accountService" class="edu.hebeu.service.impl.IAccountServiceImpl">
+        <!--通过set方法注入业务层的accountDao属性(属性类型为：AccountDao)-->
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--配置Dao层(持久层)-->
+    <bean id="accountDao" class="edu.hebeu.dao.impl.IAccountDaoImpl">
+        <!--通过set方法注入操作数据库的queryRunner属性(属性类型为：QueryRunner)-->
+        <property name="queryRunner" ref="queryRunner"/>
+    </bean>
+
+    <!--配置QueryRunner类型的 bean对象-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!--注入数据源-->
+        <constructor-arg name="ds" ref="dataSource"/>
+    </bean>
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--注入连接数据库的必要信息-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/eesy_spring"/>
+        <property name="user" value="root"/>
+        <property name="password" value="072731"/>
+    </bean>
+
+</beans>

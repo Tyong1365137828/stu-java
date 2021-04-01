@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置创建Service对象的工厂-->
+    <bean id="serviceFactory" class="edu.hebeu.factory.ServiceFactory">
+        <!--注入普通的AccountService对象(没有控制事务的代码)-->
+        <property name="accountService" ref="accountService2"/>
+        <!--注入事务管理器-->
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <!--配置Service层(业务层)，该业务层内有事务的实现代码-->
+    <bean id="accountService" class="edu.hebeu.service.impl.AccountServiceImpl">
+        <!--通过set方法注入业务层的accountDao属性(属性类型为：AccountDao)-->
+        <property name="accountDao" ref="accountDao"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <!--这个Service层没有控制事务的代码-->
+    <bean id="accountService2" class="edu.hebeu.service.impl.AccountServiceImpl2">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--配置通过ServiceFactory类的getAccountServiceAndProxy方法创建的AccountService通过代理的对象-->
+    <bean id="accountService2Proxy" factory-bean="serviceFactory" factory-method="getAccountServiceAndProxy"/>
+
+    <!--配置Dao层(持久层)-->
+    <bean id="accountDao" class="edu.hebeu.dao.impl.AccountDaoImpl">
+        <!--通过set方法注入操作数据库的queryRunner属性(属性类型为：QueryRunner)-->
+        <property name="queryRunner" ref="queryRunner"/>
+        <!--注入ConnectionUtil类型的类属性-->
+        <property name="connectionUtil" ref="connectionUtil"/>
+    </bean>
+
+    <!--配置QueryRunner类型的 bean对象-->
+    <bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
+        <!--注入数据源-->
+        <constructor-arg name="ds" ref="dataSource"/>
+    </bean>
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--注入连接数据库的必要信息-->
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/eesy_spring"/>
+        <property name="user" value="root"/>
+        <property name="password" value="072731"/>
+    </bean>
+
+    <!--配置ConnectionUtil-->
+    <bean id="connectionUtil" class="edu.hebeu.util.ConnectionUtil">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事务管理器TransactionManager-->
+    <bean id="transactionManager" class="edu.hebeu.util.TransactionManager">
+        <!--通过set方法注入connectionUtil属性-->
+        <property name="connectionUtil" ref="connectionUtil"/>
+    </bean>
+
+</beans>

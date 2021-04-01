@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="day01_eesy_springmvcDemo_01" />
+        <module name="day02_eesy_springFileUpload_03" />
+        <module name="day02_eesy_springmvcException_04" />
+        <module name="day02_eesy_springmvcResponse_02" />
+        <module name="day03_eesy_springmvcInterceptor_05" />
+        <module name="day03_eesy_ssm_06" />
+        <module name="fileUploadServer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="day01_eesy_springmvcDemo_01" target="1.8" />
+      <module name="day02_eesy_springFileUpload_03" target="1.8" />
+      <module name="day02_eesy_springmvcException_04" target="1.8" />
+      <module name="day02_eesy_springmvcResponse_02" target="1.8" />
+      <module name="day03_eesy_springmvcInterceptor_05" target="1.8" />
+      <module name="day03_eesy_ssm_06" target="1.8" />
+      <module name="fileUploadServer" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

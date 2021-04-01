@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IAccountMapper">
+
+    <!--定义一个Map类型，用来封装查询的结果集(一般是因为查询的结果集不能使用resultType属性完成(类中还含有 其他类或其他类做泛型的集合 的属性)，
+    此时就要将结果集借助于resultMap属性完成封装)
+    type属性值：表示要将查询结果集封装到哪个类型-->
+    <resultMap id="accountUserMap" type="account">
+        <!--id标签：对应 该type属性值 对应的类型 在 查询结果集中的主键字段使用；
+                property属性值：对应 该type属性值 对应的类型 的实体类的属性名；
+                column属性值：对应 该type属性值 对应的类型 在 查询结果集中的字段名；-->
+        <id property="id" column="a_id"/>
+        <!--result标签：对应 该type属性值 对应的类型 在 查询结果集中的其他字段使用；-->
+        <result property="uid" column="a_uid"/>
+        <result property="money" column="a_money"/>
+
+        <!--注意：通过分析查询结果集的两个实体类是 一对一 的，所以使用：association标签;
+            association标签：
+                property属性值：定义type属性值 对应类型中的 属性名(注意：该属性值 是一个实体类)；
+                column属性值：使用查询结果集的哪个字段来获取property属性值的，一般是该property的主键做column属性值；
+                javaType属性值：提示封装到哪个实体类中，写法是实体类的全限定类名(即包括包名，如：edu.hebeu.entity.User)；
+                    因为SqlMapConfig.xml(主配置文件)已经将实体类配置了别名，所以可以用别名 user；
+            -->
+        <association property="user" column="a_uid" javaType="user">
+
+            <!--id标签：
+                    主键字段使用；association标签的property属性值 对应的 类型 的属性 在查询结果集的主键字段使用；
+                    property属性值：定义association标签的property属性值 对应的 类型的 属性名；
+                    column属性值：对应 该association标签的property属性值 对应的 类型的 属性名 在查询结果集中对应的字段；-->
+            <id property="id" column="a_uid"/>
+
+            <!--result标签对应 association标签的property属性值 对应的 类型 的属性 在查询结果集的其他字段使用；
+                    property属性值：定义association标签的property属性值 对应的 类型的 属性名；
+                    column属性值：对应 该association标签的property属性值 对应的 类型的 属性名 在查询结果集中对应的字段；-->
+            <result property="username" column="u_username"/>
+            <result property="birthday" column="u_birthday"/>
+            <result property="sex" column="u_sex"/>
+            <result property="address" column="u_address"/>
+        </association>
+
+    </resultMap>
+    
+    <sql id="defaultSelect">
+        SELECT id, uid, money FROM account
+    </sql>
+
+    <select id="selectAccountAll" resultType="account">
+        <include refid="defaultSelect"/>;
+    </select>
+
+    <select id="selectAccountAllOO" resultMap="accountUserMap">
+        SELECT
+            a.id a_id, a.uid a_uid, a.money a_money,
+            u.username u_username, u.sex u_sex, u.address u_address, u.birthday u_birthday
+        FROM
+            account a, user u
+        WHERE
+            a.uid = u.id;
+    </select>
+
+</mapper>

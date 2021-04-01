@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--告知Spring在创建容器时要扫描的包(通过扫描包下的所有类将Spring配置的bean(对应的注解)添加到IOC容器中)-->
+    <!--<context:component-scan base-package="edu.hebeu"/>-->
+
+    <!--配置QueryRunner类型的 bean对象-->
+    <!--<bean id="queryRunner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">-->
+        <!--注入数据源-->
+        <!--<constructor-arg name="ds" ref="dataSource"/>-->
+    <!--</bean>-->
+
+    <!--配置数据源-->
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--注入连接数据库的必要信息-->
+        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"/>-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/eesy_spring"/>-->
+        <!--<property name="user" value="root"/>-->
+        <!--<property name="password" value="072731"/>-->
+    <!--</bean>-->
+
+</beans>

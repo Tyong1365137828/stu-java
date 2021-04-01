@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IRoleMapper">
+    
+    <resultMap id="roleUserMap" type="role">
+        <id property="id" column="r_id"/>
+        <result property="role_name" column="r_role_name"/>
+        <result property="role_desc" column="r_role_desc"/>
+        
+        <!--通过分析，查询出的结果集为多对多关系-->
+        <collection property="users" ofType="user">
+            <id property="id" column="u_id"/>
+            <result property="username" column="u_username"/>
+            <result property="birthday" column="u_birthday"/>
+            <result property="sex" column="u_sex"/>
+            <result property="address" column="u_address"/>
+        </collection>
+        
+    </resultMap>
+
+    <sql id="defaultSelect">
+        SELECT id, role_name, role_desc FROM role
+    </sql>
+
+    <select id="selectRoleAll" resultType="role">
+        <include refid="defaultSelect"/>;
+    </select>
+    
+    <select id="selectRoleAllMM" resultMap="roleUserMap">
+        SELECT
+            r.id r_id, r.role_name r_role_name, r.role_desc r_role_desc, 
+            u.id u_id, u.username u_username, u.birthday u_birthday,  
+                u.sex u_sex, u.address u_address 
+        FROM
+            role r
+        LEFT OUTER JOIN user_role ur ON r.id = ur.rid
+        LEFT OUTER JOIN `user` u ON ur.uid = u.id;
+    </select>
+
+</mapper>

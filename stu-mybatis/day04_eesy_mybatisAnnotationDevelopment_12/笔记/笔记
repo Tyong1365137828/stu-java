@@ -1,0 +1,86 @@
+mybatis中：
+    在一个Dao内使用注解开发后，就不能在dao包下存在同一个dao的xml文件(注解与映射配置文件不能同时出现！)！！！
+    否则会报出错误信息！
+
+mybatis使用注解开发：
+    关键注解：
+        Results类型：是一个注解
+          关键代码：
+            @Retention(RetentionPolicy.RUNTIME)
+            @Target({ElementType.METHOD})
+            public @interface Results {
+                String id() default ""; // 用来唯一标识这个@Result注解
+
+                Result[] value() default {}; // 用来配置 实体类对应的每个属性 和 数据库查询结果集字段
+            }
+
+        Result类型：是一个注解
+            关键代码：
+                @Documented
+                @Retention(RetentionPolicy.RUNTIME)
+                @Target({})
+                public @interface Result { // 这个注解出现在@Results注解的values属性中，可以标识 数据库查询结果集的一个字段 和 实体类的一个属性 之间的关系和某些特性
+                    boolean id() default false; // 是否为主键 ? true : false 默认为false
+
+                    String column() default ""; // 数据库查询结果集的一个字段名
+
+                    String property() default ""; // 实体类的属性名
+
+                    Class<?> javaType() default void.class;
+
+                    JdbcType jdbcType() default JdbcType.UNDEFINED;
+
+                    Class<? extends TypeHandler> typeHandler() default UnknownTypeHandler.class;
+
+                    One one() default @One; // 一对一、多对一 使用
+
+                    Many many() default @Many; // 一对多、多对多 使用
+                }
+                可以发现这个注解只能出现在 {}中
+            内含属性：
+                String类型的column、property属性，含义同xml映射配置文件；
+                boolean类型的id属性，用来标识是否为主键(是否为主键 ? true : false 默认为false)；
+                One类型的one属性：查询出的结果集对应的是 一对一、多对一使用；
+                Many类型的many属性：查询出的结果集对应的是 多对多、一对多使用；
+
+        One类型：是一个注解
+            关键代码：
+                @Documented
+                @Retention(RetentionPolicy.RUNTIME)
+                @Target({})
+                public @interface One {
+                    String select() default ""; // 某个 select标签的，用 包名.接口名.某个select标签的id属性值 表示
+
+                    FetchType fetchType() default FetchType.DEFAULT; // 加载的时机，(DEFAULT:默认；LAZY:延迟加载；EAGER:立即加载；)；
+                }
+                可以发现这个注解只能出现在 {}中
+            内含属性：
+                String类型的select属性，这个属性可以看作xml配置文件方式，使用缓存的select属性一样
+                FetchType类型的fetchType属性，这个属性可以指定执行select属性对应的select标签的SQL语句的时机(DEFAULT:默认；LAZY:延迟加载；EAGER:立即加载；)；
+
+          Many类型：是一个注解
+            关键代码：
+                @Documented
+                @Retention(RetentionPolicy.RUNTIME)
+                @Target({})
+                public @interface Many {
+                    String select() default ""; // 某个 select标签的，用 包名.接口名.某个select标签的id属性值 表示一个select标签
+
+                    FetchType fetchType() default FetchType.DEFAULT; // 加载的时机，(DEFAULT:默认；LAZY:延迟加载；EAGER:立即加载；)；
+                }
+                可以发现这个注解只能出现在 {}中
+            内含属性：
+                String类型的select属性，这个属性可以看作xml配置文件方式，使用缓存的select属性一样
+                FetchType类型的fetchType属性，这个属性可以指定执行select属性对应的select标签的SQL语句的时机(DEFAULT:默认；LAZY:延迟加载；EAGER:立即加载；)；
+
+          ResultMap类型，是一个注解：
+            关键代码：
+            @Documented
+            @Retention(RetentionPolicy.RUNTIME)
+            @Target({ElementType.METHOD})
+            public @interface ResultMap {
+                String[] value(); // 这个数组的每个元素都表示 一个select标签(用 包名.接口名.某个select标签的id属性值 表示一个select标签)
+            }
+            可以发现这个注解只能出现在 方法上
+            内含属性：
+                String数组类型的value属性，这个属性可以配合要引用的@Result注解的id属性值 即可实现引用(可以引用多个@Result注解的id属性值)；

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hebeu.dao.IUserDao">
+
+    <!--配置 查询结果的列名 和 实体类的属性名 的对应关系-->
+    <resultMap id="userMap" type="edu.hebeu.entity.User">
+        <!--id标签：主键字段的对应，property属性表示对应的实体类的属性名，column属性表示对应的数据库中表的字段名-->
+        <id property="userId" column="id"></id>
+        <!--result标签：非主键字段的对应，property属性表示对应的实体类的属性名，column属性表示对应的数据库中表的字段名-->
+        <result property="userName" column="username"></result>
+        <result property="userAddress" column="address"></result>
+        <result property="userSex" column="sex"></result>
+        <result property="userBirthday" column="birthday"></result>
+    </resultMap>
+
+    <!--插入一条记录 insertUser()方法使用，parameterType表示插入数据的值在那种类型中存放
+        注意：#{}内的内容对应的是parameterType类型的属性！(在框架底层会通过反射机制获取到)
+
+        补充：在执行完插入语句紧随其后执行 SELECT LAST_INSERT_ID(); 语句可以得到新插入记录的id，
+        如：INSERT INTO `user`(username, birthday, sex, address) VALUES ('测试', '2012-02-03 20:08:49', '女', '江苏省');
+            SELECT LAST_INSERT_ID();
+        可以利用这个机制在mybatis的 insert标签内使用-->
+    <insert id="insertUser" parameterType="edu.hebeu.entity.User">
+        <!--配置这个标签作用是在插入记录之后获取插入的id;
+        这个标签的 keyProperty属性代表 父标签的parameterType属性值(pojo对象)内属性的名称，keyColumn属性代表数据库内字段的名称，
+        order标签取值为AFTER代表在插入后执行，resultType属性代表返回值的类型-->
+        <selectKey  keyProperty="userId" keyColumn="id" order="AFTER" resultType="java.lang.Integer">
+          SELECT LAST_INSERT_ID();
+        </selectKey>
+      INSERT INTO user(username, birthday, sex, address) VALUES(#{userName}, #{userBirthday}, #{userSex}, #{userAddress});
+    </insert>
+
+    <!--删除一条记录 deleteUser()方法使用，parameterType表示删除的条件
+        注意：条件是一个参数时，那么#{}内是不用与该记录的实体类的属性去对应的，随便写(起到占位符作用即可!)!-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+      DELETE FROM user WHERE id = #{随便写};
+    </delete>
+
+    <!--更新一条记录 updateUser()方法使用，parameterType表示更新数据的值在那种类型中存放-->
+    <update id="updateUser" parameterType="edu.hebeu.entity.User">
+      UPDATE user SET username = #{userName}, birthday = #{userBirthday}, sex = #{userSex}, address = #{userAddress} WHERE id = #{userId};
+    </update>
+
+    <!--查询所有 selectAll()方法使用，resultType表示查询出的数据分装到那种类型的结果集-->
+    <!--<select id="selectAll" resultType="edu.hebeu.entity.User" resultMap="userMap">-->
+    <select id="selectAll" resultMap="userMap">
+    <!--这种方式是通过对数据库查询的字段起别名(使别名与User实体类的属性名一致)，以保证将查询到的结果封装到实体类(resultType属性值)中-->
+      <!--SELECT id AS userId, username AS userName, birthday AS userBirthday, sex AS userSex, address AS userAddress FROM user;-->
+      <!--这种方式通过 resultMap 将查询结果字段名 与实体类的属性名 一一对应，实现将数据封装进实体类中-->
+      SELECT id, username, birthday, sex, address FROM user;
+    </select>
+
+    <!--通过id精确查询 selectUserById()方法使用，parameterType表示查询的条件(id的类型)，resultType表示查询结果封装到何类型，
+        注意：条件是一个参数时，那么#{}内是不用与该记录的实体类的属性去对应的，随便写(起到占位符作用即可!)!-->
+    <!--<select id="selectUserById" parameterType="java.lang.Integer" resultType="edu.hebeu.entity.User">-->
+    <select id="selectUserById" parameterType="java.lang.Integer" resultMap="userMap">
+      SELECT id, username, birthday, sex, address FROM user WHERE id = #{随便写};
+    </select>
+
+    <!--<select id="selectUserDim" parameterType="edu.hebeu.entity.User" resultType="edu.hebeu.entity.User">-->
+    <select id="selectUserDim" parameterType="edu.hebeu.entity.User" resultMap="userMap">
+      SELECT id, username, birthday, sex, address FROM user WHERE username LIKE CONCAT('%', #{userName}, '%');
+    </select>
+
+    <select id="totalUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      SELECT COUNT(id) total_user FROM user;
+    </select>
+
+    <!--通过User包装类UserVo内的属性查询用户，
+        注意：此时#{}或者${}内的值应该对应UserVo类中的属性，
+        如UserVo中的属性名是user(User类的对象)，对象user中有username属性(User类中的属性)-->
+    <!--<select id="selectUserByVo" parameterType="edu.hebeu.entity.UserVo" resultType="edu.hebeu.entity.User">-->
+    <select id="selectUserByVo" parameterType="edu.hebeu.entity.UserVo" resultMap="userMap">
+      SELECT
+        id, username, birthday, sex, address
+      FROM
+        user
+      WHERE
+        username LIKE CONCAT('%', #{user.userName}, '%');
+    </select>
+
+</mapper>

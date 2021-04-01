@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserDao">
+
+    <insert id="insertUser" parameterType="User">
+      <selectKey keyProperty="id" keyColumn="id" resultType="java.lang.Integer" order="AFTER">
+          SELECT LAST_INSERT_ID();
+      </selectKey>
+        INSERT INTO user(username, birthday, sex, address) VALUES(#{username}, #{birthday}, #{sex}, #{address});
+    </insert>
+
+    <select id="selectUserAll" resultType="USER">
+        SELECT id, username, birthday, sex, address FROM user;
+    </select>
+
+    <select id="selectUserDim" parameterType="user" resultType="user">
+        SELECT id, username, birthday, sex, address
+        FROM user
+        WHERE username LIKE CONCAT('%', #{username}, '%');
+    </select>
+
+</mapper>

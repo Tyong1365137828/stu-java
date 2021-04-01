@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--配置Spring的IOC，把Service对象配置进来-->
+    <bean id="accountService" class="edu.hebeu.service.impl.AccountServiceImpl"/>
+
+    <!--配置Spring的AOP，步骤：
+            1、把通知的bean也交给Spring来管理;
+            2、使用 aop:config 标签表明开始AOP的配置;
+            3、使用 aop:aspect 标签表明开始配置切面;
+                内含属性：
+                    id：给切面提供一个唯一标识;
+                    ref：指定通知类bean的id;
+                    order：
+            4、在aop:aspect标签的内部 使用对应的标签(aop:before\after\...)来配置通知的类型(前置、后置、...);
+                内含属性：
+                    method：(对于此例来说)用于指定Logger类的哪个方法是前置通知;
+                    pointcut：用于指定切入点表达式，该表达式的含义指的是通过method属性值对应的方法对业务层的哪些方法增强;
+                        切入点表达式的写法：
+                            关键字：execution(表达式)
+                            表达式：
+                                访问修饰符 返回值 全限定类名(包含包名的全限定类名).方法名(参数列表 )
+            -->
+
+    <!--配置通知类(Logger)-->
+    <bean id="logger" class="edu.hebeu.utils.Logger"/>
+
+    <!--配置AOP-->
+    <aop:config>
+        <!--配置切面表达式(注意如果有切面要使用这个表达式，这个表达式就必须配置在要使用这个表达式的切面之前！！！)-->
+        <aop:pointcut id="pCut" expression="execution(* edu.hebeu.service.impl.AccountServiceImpl.*(..))"/>
+
+        <!--开始配置切面-->
+        <aop:aspect id="logAdvice" ref="logger">
+            <!--配置通知的类型(前置通知)并且建立通知方法和切入点方法的关联-->
+            <!--<aop:before method="beforeAdvice" pointcut="execution(public void edu.hebeu.service.impl.AccountServiceImpl.addAccount())"/>-->
+            <!--<aop:before method="beforeAdvice" pointcut-ref="pCut"/>-->
+
+            <!--配置通知的类型(后置通知)并且建立通知方法和切入点方法的关联-->
+            <!--<aop:after-returning method="afterAdvice" pointcut="execution(public void edu.hebeu.service.impl.AccountServiceImpl.addAccount())"/>-->
+            <!--<aop:after-returning method="afterAdvice" pointcut-ref="pCut"/>-->
+
+            <!--配置通知的类型(异常通知)并且建立通知方法和切入点方法的关联-->
+            <!--<aop:after-throwing method="throwAdvice" pointcut="execution(public void edu.hebeu.service.impl.AccountServiceImpl.addAccount())"/>-->
+            <!--<aop:after-throwing method="throwAdvice" pointcut-ref="pCut"/>-->
+
+            <!--配置通知的类型(最终通知)并且建立通知方法和切入点方法的关联-->
+            <!--<aop:after method="finallyAdvice" pointcut="execution(public void edu.hebeu.service.impl.AccountServiceImpl.addAccount())"/>-->
+            <!--<aop:after method="finallyAdvice" pointcut-ref="pCut"/>-->
+
+            <!--配置环绕通知-->
+            <aop:around method="aroundAdvice" pointcut-ref="pCut"/>
+
+            <!--配置切入点表达式：
+            属性：
+                id：该切面表达式的唯一标识;
+                expression：切面表达式的内容;
+                注意：此标签写在切面标签 aop:aspect标签的 内部，只能当前切面使用;
+                它还可以写在 aop:aspect标签的外面(但是注意必须要在切面之前定义！！！)，此时所有的切面都可以使用;-->
+            <!--<aop:pointcut id="pCut" expression="execution(* edu.hebeu.service.impl.AccountServiceImpl.*(..))"/>-->
+        </aop:aspect>
+
+    </aop:config>
+
+</beans>

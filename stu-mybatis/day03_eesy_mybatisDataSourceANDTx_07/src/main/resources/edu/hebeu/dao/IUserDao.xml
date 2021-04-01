@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.IUserDao">
+
+    <!--可以将重复的代码块抽取出来，通过 id属性值进行标识，在使用时直接 通过include标签调用即可-->
+    <sql id="defaultSelect">
+        SELECT id, username, birthday, sex, address FROM user
+    </sql>
+
+    <select id="selectUserAll" resultType="user">
+      <include refid="defaultSelect"/> ;
+    </select>
+
+    <select id="selectUserById" parameterType="int" resultType="user">
+        <include refid="defaultSelect"/> WHERE id = #{id};
+    </select>
+
+    <select id="selectUserDim" parameterType="user" resultType="user">
+        <include refid="defaultSelect"/>
+
+        <where><!--where标签嵌套if标签，相当于SQL语句的WHERE条件，并且当where内的条件均不满足时，where标签不会被编译成SQL语句(代替了WHERE 1 = 1)！！！！！！-->
+            <if test="username != null and username != ''"><!--注意：test属性值对应是是实体类的属性值！！！！！！如本例的username对应的是parameterType属性值对应的类型的属性，
+         即实体类User的 username属性 而非数据库字段名;
+         而and关键字是代表数据库的关键字，而不能使用Java中的 & 符号;
+         结论：if、foreach、等标签内的属性的值 语法结构是MySQL，需要赋值的属性的值是Java对应的实体类的属性名！！！！！！！！！！！！！！！-->
+
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+        </where>
+        ;
+    </select>
+
+    <select id="selectUserByVo" parameterType="userVo" resultType="user">
+        <include refid="defaultSelect"/>
+
+        <where>
+          <if test="user != null">
+              <if test="user.username != null and user.username != ''">
+                  AND username LIKE CONCAT('%', #{user.username}, '%')
+              </if>
+          </if>
+          <if test="userIds != null and userIds.size() > 0">
+            <!--此例子相当于MySQL中的子查询SELECT ... FROM ... WHERE in(..., ..., ...)
+                以下表示：
+                    collection属性值：遍历parameterType属性值对应的类型的 userIds属性，
+                    open属性值：SQL语句从 and id in( 开始，
+                    close属性值：SQL语句以 ) 结束，
+                    item属性值：在open属性值和close属性值之间填充，
+                    separator属性值：以 , 分割 遍历的item属性值，
+                    注意：#{}内的内容要与item属性值对应一致！！！-->
+            <foreach collection="userIds" open="and id in (" close=") " item="与item属性值对应" separator=",">
+                #{与item属性值对应}
+            </foreach>
+          </if>
+        </where>
+        ORDER BY birthday DESC;
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+什么是延迟加载？
+    在真正使用数据时才发起查询，不用的时候不查询，又称为 懒加载/按需加载；
+
+什么是立即加载？
+    不管用不用，只要一调用方法，就立即发起查询；
+
+在表的对应的四种关系中：
+    一对一、多对一：通常使用立即加载；
+    一对多、多对多：通常使用延迟加载；
+
+mybatis如何配置延迟加载：
+    1、主配置文件的configuration标签内添加settings标签，在setting标签内添加两个setting标签，如下所示：
+        <!--配置参数-->
+            <settings>
+
+                <!--mybatis全局的延迟加载开关，默认为false(关闭)，此处设置为true(开启)-->
+                <setting name="lazyLoadingEnabled" value="true"/>
+
+                <!--将积极加载 改为 按需加载，即允许 触发方法进行立即加载，否则按需加载，默认为false，所以这个标签也可以不用配置！-->
+                <setting name="aggressiveLazyLoading" value="false"/>
+            </settings>
+
+    2、
+        当为 一对一 或 多对一 的表关系时：
+            <association/>标签内使用属性 property、column、javaType、select属性，并将association标签内的子标签全部删除，如下：
+                <!--一对一关系实现延迟加载，
+                    需要使用:
+                         select属性：属性值必须是能够 唯一查询 property属性值对应 的属性的类型(javaType属性值对应的类型) 的select标签(mapper标签的namespace属性值.select标签属性值)；
+                         column属性：属性值是 唯一查询 property属性值对应的类型(javaType属性值对应的类型) 的数据库查询结果集字段名，以供select属性值 对应的select标签使用；-->
+                <association property="user" javaType="user" select="edu.hebeu.dao.IUserDao.selectUserById" column="a_uid"/>
+
+        当为 一对多 或 多对多 的表关系时：
+            <!--一对多实现延迟加载：
+                需要使用:
+                    select属性：属性值必须是能通过数据库查询结果集字段 做的条件 查询出多个 property属性值对应的类型(ofType属性值对应的类型)；
+                    column属性：属性值是 select属性值对应的 select标签的 SELECT ... 语句的条件，该条件 对应的 数据库查询结果集的字段
+                -->
+            <collection property="accounts" ofType="account" select="edu.hebeu.dao.IAccountDao.selectAccountByUID" column="u_id"/>

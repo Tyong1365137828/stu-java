@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties resource="db.properties"/>
+
+    <!--配置参数-->
+    <settings>
+
+        <!--mybatis全局的延迟加载开关，默认为false(关闭)，此处设置为true(开启)-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+        <!--将积极加载 改为 按需加载，即允许 触发方法进行立即加载，否则按需加载，默认为false，所以这个标签也可以不用配置！-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <typeAliases>
+        <package name="edu.hebeu.entity"/>
+    </typeAliases>
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.jdbc.driver}"/>
+                <property name="url" value="${mysql.jdbc.url}"/>
+                <property name="username" value="${mysql.jdbc.username}"/>
+                <property name="password" value="${mysql.jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <package name="edu.hebeu.dao"/>
+    </mappers>
+
+</configuration>

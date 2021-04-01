@@ -1,0 +1,13 @@
+mybatis中的连接池：
+    mybatis连接池提供了3中方式的配置：
+        配置位置：主配置文件的 dataSource标签 的 type属性，type属性表示采用何种连接池方式；
+        type属性的取值：
+            POOLED
+                表示采用传统的javax.sql.DataSource规范中的连接池，mybatis中有针对规范的实现；
+
+            UNPOOLED
+                采用传统的获取连接的方式，虽然也实现了 javax.sql.DataSource接口，但是并没有使用池的思想；
+
+            JNDI
+                采用服务器提供的JNDI技术实现来获取DataSource对象，不同的服务器所能拿到的DataSource是不一样的，
+                注意：如果不是 web或者maven的war工程 是不能使用的；如 tomcat在这种方式下采用的连接池是 dbcp连接池；

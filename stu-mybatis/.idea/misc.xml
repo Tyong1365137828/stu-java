@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/day03_eesy_JNDI09" />
+    <file type="web" url="file://$PROJECT_DIR$/day03_eesy_JNDI_09" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/eesy__mybatis_01/pom.xml" />
+        <option value="$PROJECT_DIR$/eesy_mybatis_01/pom.xml" />
+        <option value="$PROJECT_DIR$/eesy_mybatis_02/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_customMybatis_03/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_mybatis_01/pom.xml" />
+        <option value="$PROJECT_DIR$/day01_eesy_mybatis_02/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_mybatisCRUD_04/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_mybatisDao_05/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_mybatisDaoImpl_05/pom.xml" />
+        <option value="$PROJECT_DIR$/day02_eesy_otherLabel_06/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_mybatisDataSourceANDTx_07/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_mybatisMultiTableOperation_08/pom.xml" />
+        <option value="$PROJECT_DIR$/day03_eesy_JNDI_09/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_mybatisLoad_10/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_mybatisCache_11/pom.xml" />
+        <option value="$PROJECT_DIR$/day04_eesy_mybatisAnnotationDevelopment_12/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
