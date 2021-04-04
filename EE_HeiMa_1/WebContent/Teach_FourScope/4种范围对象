@@ -1,0 +1,11 @@
+注意：四种范围对象(由小到大)
+	pageContext(page对象)：jsp页面容器			当前页面有效,跳转后无效(包括转发、重定向等)
+	request：请求对象							同一次请求有效(如转发有效、重定向无效)
+	session:会话对象								同一次会话有效(转发、重定向均有效)
+	application：全局对象						全局有效(整个项目运行期间都有效,切换浏览器依然有效,关闭或重启服务器后无效)
+	以上四个对象的共有方法：
+		1)、Object getAttribute(String name)：根据属性名获取属性值
+		2)、void setAttribute(String name,Object obj)：设置属性值(新增、修改)
+				例如:setAttribute("a","b")//如果a对象之前不存在,则新建一个a对象并赋为b;如果a对象之前存在,则将a的值改为b的值;
+		3)、void removeAttribute(String name)//根据属性名删除对象
+		

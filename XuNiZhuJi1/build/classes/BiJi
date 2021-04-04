@@ -1,0 +1,17 @@
+虚拟主机
+如通过"****"访问到主机(localhost)等等一些意想不到的结果
+
+过程:
+1、在本机以管理员进入cmd，输入"notepad"命令，选择文件，点击打开"C:\Windows\System32\drivers\etc"，把"文本文档"变为"所有文件"，
+选择hosts文件，在"# localhost name resolution is handled within DNS itself."行下，参照其行下的内容输入
+"127.0.0.1	<Host>标签的name的值"，注意不带"#"
+
+2、配置文件"server.xml"的<Enqine>标签里，添加一个<Host>标签，并填入代码：
+<Host appBase="要访问项目的实际路径" name="随意定义一个虚拟路径作为虚拟主机" >
+	<Context docBase="与appBase一样，为要访问项目的实际路径" path="/" />
+</Host>
+
+3、再把"		<Engine defaultHost="localhost"		"改成<Host>标签的name的值
+
+访问：访问"http://(前面的协议内容也可以不写)name的值:端口号("80"可以省略不写)/path值("/"可以省略不写)"，即可访问到本机项目资源
+注意:如果端口不是"8080",则要在访问"name的值"后加":端口号"

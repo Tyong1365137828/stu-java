@@ -1,0 +1,29 @@
+常见的线程调度模型：
+	抢占式调度模型：
+		哪个线程的优先级别较高，抢到的CPU时间片的概率就高一些；
+	均分式调度模型：
+		平均分配CPU时间片，每个线程占有的CPU时间片的时间长度一样，平均分配、一切平等；
+	
+	Java语言使用的是抢占式调度模型，某些语言使用的是均分式调度模型；
+	
+Java中的那些方法是和线程调度有关的？
+	void setPriority(int newPriority); // 设置线程的优先级
+	int getPriority(); // 获取线程的优先级
+	/**最低优先级是1，最高优先级是10，默认优先级是5；优先级别高的获取CPU时间片可能会多一些(但也不完全是，大概率是多的)*/
+	
+	void join(); // 合并线程，等待该线程终止；
+	void join(long millisecond) // 参数是毫秒；合并线程，等待该线程终止的时间最长为millisecond毫秒；
+	void join(long millisecond, long nanosecond) // 参数1是毫秒，参数二是纳秒；合并线程，等待该线程终止的时间最长为millisecond毫秒 + nanosecond纳秒；
+	// 合并线程(多线程变成单线程)的例子
+	class MyThread1 extends Thread { // MyThread1线程类
+		public void doSonme() {
+			MyThread2 mt2 = new MyThread2(); // 创建MyThread2线程类的对象
+			mt2.join(); // 当前线程进入阻塞，mt2线程执行，直到mt2线程执行完毕，当前线程才可以继续继续执行
+		}
+	}
+	class MyThread2 extends Thread { // MyThread2线程类
+	}
+	
+	static void yield(); // 线程让位，暂停当前正在执行的线程，并执行其他线程
+	/**yield()方法不是阻塞，让当前线程让位，让给其他线程使用；yield()方法的执行会让当前线程从 运行状态 回到 就绪状态；
+	注意：再回到就绪之后，有可能还会再抢到*/

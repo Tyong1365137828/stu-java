@@ -1,0 +1,130 @@
+一、jsp与servlet：两者并存，jsp用于前台页面展示；servlet用于后台流程调度(即Java代码运行)
+
+
+
+二、servlet创建的两种方式：
+1、点击new选择class后在Superclass行点击Browse输入httpservlet后选择后点击finish；
+然后，在source下选择override/Implement Methods，然后只选择doGet和doPost进行ok
+
+2、点击new后直接选择servlet(会自动把get和post两种方法生成)
+
+3、注意：一般get和post内只完善一个就够了，另一个直接用代码(do[完成的那一个方法])调用写的那一个。
+
+
+
+三、servlet运行的两种方法(这两种方式不能混用)：
+1、配置web.xml(不用刻意记住此方法)
+在</web-app>的上一行输入
+ <servlet>
+	<servlet-name>运行的servlet类名</servlet-name>  注意：这个是命名，和下面的要运行的servlet类名可以不一样，但是最好一样
+	<servlet-class>包名.要运行的servlet类名</servlet-class>  注意：包名.类名(这个类名是创建类(类名.class)的下一级,而不是类名.class)，可以选择类名后进行Copy Quali..拷贝名字，防止输入错误
+  </servlet>
+  <servlet-mapping>
+	<servlet-name>运行的servlet类名</servlet-name>注意：与上一个<servlet-name>运行的servlet类名</servlet-name>定义的名字要一致
+	<url-pattern>/.../...(浏览器的地址里给servlet起的url名)</url-pattern>  注意：这个路径是在浏览器的地址里输入的，是个可以随意起的名字
+  </servlet-mapping>
+
+运行的过程：1)、<url-pattern>/servlet/运行的servlet类名</url-pattern> ---2)、<servlet-name>运行的servlet类名</servlet-name>--
+	    3)、<servlet-name>运行的servlet类名</servlet-name>--4)、<servlet-class>包名.要运行的servlet类名</servlet-class>
+
+2、注解方式(servlet3.0以上的版本才能用注解，以下不可)
+	在类的前面加@WebServlet("/.../...(这里面的路径随便写，但是注意浏览器的搜索地址以此为准)")，这里默认的是urlPatterns
+
+	或者@WebServlet(name="",urlPatterns={"路径1","路径2"},loadOnStartup=0/1/2/3/4/5)
+	name表示给类起的名字	urlPatterns表示可以访问的路径	loadOnStartup(默认为0)表示启动的先后，越小越先启动，0表示随服务器一起启动
+
+
+
+四、前台指定的servlet文件的运行
+	比如，点击登录按钮转向servlet文件执行的代码，当使用配置web.xml方式时有".."；使用注解方式时没有".."
+	<form action="..(返回上一级目录)/需执行的servlet文件的urlPatterns" method="post">  
+    action是点击登录按钮后跳转到哪个地方，这里表示的路径是执行的servlet文件的urlPatterns(即
+web.xml文件的<url-pattern>urlPatterns的内容</url-pattern>或者@WebServlet(name="随便写",
+urlPatterns={"路径1","路径2"，但是注意与相应的action要对应},loadOnStartup=0/1/2/3/4/5));method默认为get提交(此提交会
+在浏览器地址栏泄露用户的账号，密码等信息);最好使用post提交；
+
+
+
+五、转发与重定向
+转发：1)、没有产生新的请求，2)、request的值可以共享，3)、地址栏的值没有变化，4)、只能在本服务器的资源来回访问，不能解决不同服务器的资源访问问题；
+request.getRequestDispatcher("/admin/loginSuccess.jsp(本工程下的jsp文件路径)").forward(request, response);
+
+重定向：能够解决不同服务器的资源访问问题
+response.sendRedirect("重定向的网页地址");
+
+
+
+六、访问资源：一方面从jsp访问，另一方面从servlet访问---跳转
+
+前台，即jsp等访问资源的几种方式
+1、表单(即使用type属性为"submit(是提交，不是按钮)"与<form action="..." method="post">相关联进行提交)，提交方式有get和怕post两种提交方式选择，默认是get
+2、超链接(即<a href="...">这是一个超链接</a>)，只有get提交方式
+	注意：1)、超链接的href属性能写jsp文件路径，也能写servlet，但是注意开头无"/"
+	2)、如果超链接有多个选项，则使用无序列表：
+		<ul>
+			<li><a href="...">这是第一个超链接</a><li>
+			<li><a href="...">这是第二个超链接</a><li>
+		<ul>
+		
+3、按钮(事件触发)：借助js里写的方法
+	<input type="button" value="add1.jsp" onclick="jump1()"><br><!-- type是类型；value是给用户显示的信息；onclick表示单击事件 -->
+ 	 <input type="button" value="add2.jsp" onclick="在js(本页面的Java脚本中的Java代码)中的方法"><br>
+  <input type="button" value="add3.jsp" onclick="jump3()"><br>
+
+后台、servlst访问资源的几种方式，跳转
+1、转发：服务器直接调用一个资源(jsp文件)给用户，然后才是你看到的结果
+request.getRequestDispatcher("B.jsp").forward(request, response);：请求转发的方式，跳转至B页面
+
+2、重定向：1)、服务器端的servlet先给浏览器客户端一个信息
+		2)、浏览器客户端再请求服务器的上资源，然后才是你看到的结果
+response.sendRedirect("需要重定向的路径") throws IOException;：重定向(页面跳转的一种方式)
+
+									注意请求转发与重定向的区别：
+									
+										请求转发										重定向
+
+地址栏是否改变							不变											会改变
+
+保留第一次请求时的数据(是否在一			保留											不保留
+次请求中有效)
+
+客户端请求次数							1次											2次
+
+跳转位置									在服务端跳转									在客户端进行第二次跳转
+
+七、中文乱码的解决
+统一请求编码：request
+	get请求，解决乱码：1)、使用"new String(要转码的变量名.getBytes("旧编码"),"新编码")"一个一个的改
+						2)、修改server.xml文件，一次性的修改tomcat默认get提交方式的编码，在"<Connector>"标签中添加URIEncoeding="需要修改成什么样的编码"
+						如URIEncoeding="UTF-8"
+
+	post请求，解决乱码：使用"request.setCharacterEncoding("需要改成的新编码")"
+	
+八、"/"
+	如果出现在web.xml中:在开头,表示项目路径(上下文路径),如http://127.0.0.1:8080/EE_3_myservlet_2/
+	如果出现在jsp中:在开头,表示服务器根路径,如http://127.0.0.1:8080/
+注意：构建路径src和WebContent都表示根路径
+
+九、Servlet的生命周期，五个(Servlet2.5和3.0在EE_3_myservlet_1和EE_3_myservlet_2分别体现)
+1、加载		
+2、初始化	init()方法	该方法会在Servlet加载并实例化以后执行，第一次访问Servlet时会被执行(且执行一次);也可以使其在Tomcat启动时自动执行(Servlet2.5版本在web.xml文件中在该Servlet的<servlet>标签里写入<load-on-startup>1</load-on-startup>
+																																Servlet3.0版本在注解内写入value="/servlet名",loadOnStartup=1)
+3、服务		service()抽象方法(主要关注doGet()和doPost()方法)	调用几次则执行几次
+4、销毁		destroy()方法	关闭Tomcat服务时执行(Server里的红点关闭)
+5、卸载		
+
+十、Servlet API(可以适用于任何的通讯协议),由两个软件包组成(对应于HTTP协议的软件包和对应于除HTTP协议以外的其他软件包)
+
+十一、Sevlet设置初始化参数(Servlet2.5和3.0在EE_3_myservlet_1体现)
+
+十二、Servlet继承关系,继承以下几个接口:
+	接口1、ServletConfig接口,其内包含的重要方法:
+		1)、String getServletName(),获取Servlet的名字
+		2)、ServletContext getServletContext(),获取Servlet上下文对象(内置对象application就是由ServletContext接口类产生的)
+			注意:ServletContext是一个接口,ServletContext(application)主要方法有String getContextPath()//获取虚拟路径、
+			String getRealPath()//获取绝对路径(虚拟路径相对的绝对路径)、setAttribute()、getAttribute()、
+			String getInitParameter(String name)方法(在当前web容器,即整个项目下获取名为"name"的参数值)
+			
+		3)、String getInitParameter(String name),在当前Servlet获取名为"name"的参数值
+	接口2、Servlet接口
+	接口3、Serializable接口

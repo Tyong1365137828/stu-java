@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxool-config>
+    <!-- 此配置的注解针对roxool 0.9.1  -->
+    <proxool>
+        <!-- 别名 -->
+        <alias>DB</alias>
+        <!-- 数据库连接的url -->
+        <driver-url>jdbc:mysql://127.0.0.1:3306/ume</driver-url>
+        <!-- 数据库驱动类 -->
+        <driver-class>com.mysql.jdbc.Driver</driver-class>
+        <driver-properties>
+          <!-- 数据库用户名 -->
+          <property name="user" value="root"/>
+          <!-- 数据库密码 -->
+          <property name="password" value="root"/>
+       </driver-properties>
+       <!-- 最大连接数，默认值为50 -->
+       <maximum-connection-count>50</maximum-connection-count>
+       <!-- 最小连接数，默认值为1 -->
+       <minimum-connection-count>1</minimum-connection-count>
+       <!-- house keeping 保留线程处于睡眠状态的最长时间，它的职责就是检查各个连接状态
+       ，并判断是否需要销毁或创建，默认是30秒，此处是60秒  -->
+       <house-keeping-test-sql>60000</house-keeping-test-sql>
+       <!-- 同时最大连接数 -->
+       <simulaneous-build-throttle>20</simulaneous-build-throttle>
+       <!-- 连接池中可用的连接数量，如果连接池中的连接数量少于这个数值时，新的连接将被建立 -->
+       <!-- 一次生产连接的数量 -->
+       <prototype-count>3</prototype-count>
+        <!-- 连接最大时间活动，默认是5分钟 -->
+        <maximum-active-time>5*60*1000</maximum-active-time>
+        <!-- 连接最大生命时间，默认是5分钟 -->
+        <!--  
+        <maximum-connection-lifetime></maximum-connection-lifetime>
+        -->
+    </proxool>
+</proxool-config>

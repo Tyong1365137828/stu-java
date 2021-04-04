@@ -1,0 +1,36 @@
+Java为8种基本数据类型又封装了8种包装类型，这8种包装类型都是引用数据类型，父类(Number和Object)的父类都是Object
+
+为这8种基本数据类型提供包装类的目的：
+	当出现这样的需求时：public void test(Object obj) {}
+	如果需要为这个方法传递一个基本数据类型，在不使用包装类的前提下，除了给这个方法加参数外，显然没有更好的解决方法
+	就出现了基本数据类型使用受限的情况；因此，可以把基本数据类型放入一个对象中进行传入，Sun公司因此为这8个基本数据
+	类型提供了各自的包装类
+	
+	
+8种基本数据类型			8种包装类型
+	byte:				java.lang.Byte(父类Number)
+	short:				java.lang.Short(父类Number)
+	int:				java.lang.Integer(父类Number)
+	long:				java.lang.Long(父类Number)
+	float:				java.lang.Float(父类Number)
+	double:				java.lang.Double(父类Number)
+	boolean:			java.lang.Boolean(父类Object)
+	char:				java.lang.Character(父类Object)
+	
+重点包装类：java.lang.Integer包装类，其他类型参照java.lang.Integer即可************
+
+Number类：Number类是一个抽象类，无法实例化为对象，Number类中有如下这样的方法：
+	byte byteValue() // 以byte形式返回指定数值
+	abstract double doubleValue() // 以double形式返回指定数值
+	abstract float floatValue() // 以float形式返回指定数值
+	abstract int intValue() // 以int形式返回指定数值
+	abstract long longValue() // 以long形式返回指定数值
+	short shortValue() // 以short形式返回指定数值
+这些方法都是在所有的数字包装类的子类都有，这些方法是负责 "拆箱" 的
+
+
+经典异常：
+	空指针异常：NullPointerException
+	类型转换异常：ClassCastException
+	数组下标越界异常：ArrayIndexOutOfBoundsException
+	数字格式化异常：NumberFormatException

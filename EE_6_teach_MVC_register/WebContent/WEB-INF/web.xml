@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>EE_6_teach_MVC_register</display-name>
+
+  <servlet>
+    <servlet-name>myProxoolServlet</servlet-name><!--自定义名字-->
+    <servlet-class>org.logicalcobwebs.proxool.configuration.ServletConfigurator</servlet-class>
+   
+    <init-param><!-- 加载两个参数-->
+      <!-- 如果用proxool.properties配置文件的方式创建连接池,采用如下-->
+      <param-name>propertyFile</param-name><!--此值固定不变-->
+      <param-value>WEB-INF/classes/proxool.properties</param-value> <!--因为proxool.properties文件在src下，编译后会自动保存到classes下-->
+      
+      <!--如果用proxool.xml文件的方式来创建连接池,采用如下 -->
+      <!-- <param-name>xmlFile</param-name> -->
+      <!-- <param-value>WEB-INF/proxool.xml</param-value> -->
+
+    </init-param>
+    <load-on-startup>1</load-on-startup><!--设置为随服务器启动 -->
+  </servlet>
+
+  <!-- 这个servlet与下面的mapping连用进行监控作用-->
+  <servlet>
+    <servlet-name>proxool</servlet-name>
+    <servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class><!-- 监控使用-->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>proxool</servlet-name>
+    <url-pattern>/JianKong</url-pattern>
+  </servlet-mapping>
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

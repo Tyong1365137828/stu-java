@@ -1,0 +1,27 @@
+session和cookie技术(用于实现记住密码、某个时间段免登录、等)
+
+一、cookie
+1、cookie是借助重定向回去的，那么在success.jsp中能否能看到cookie呢？
+能见到，只是没必要。把login.jsp中的代码copy过来即可。
+
+2、但如果是转发，能不能得到cookie呢？
+不能的。会员卡刚办好，还没回去。只有响应回去，下次访问才能得到cookie
+
+
+
+二、cookie的访问范围
+1、将cookie保存在客户端后，持续的任何request是不是都携带着cookie访问？
+与范围相关，指定范围内的是，否则不是
+
+2、setPath()可以指定范围
+/:当前服务器  一般是最大的范围
+/xxx/:一个项目
+/xx/xx/:指定路径
+setDomain(“cn.com”); 是个域。比较少用。
+
+
+
+
+三、cookie传递中文
+注意、cookie不能传递汉字如果想要传递汉字，则：
+1、

@@ -1,0 +1,5 @@
+StringBuffer和StringBuilder的区别：
+	StringBuffer内的方法都有 synchronized 关键字修饰，表示StringBuffer在多线程环境下运行是安全的；
+	StringBuilder内的方法都没有 synchronized 关键字，表示StringBuilder在多线程环境下运行是不安全的；
+	结论：
+		StringBuffer是线程安全的；StringBuilder是非线程安全的；

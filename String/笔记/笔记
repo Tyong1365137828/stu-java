@@ -1,0 +1,18 @@
+Java的垃圾回收器不会回收常量，因此字符串常量池内的数据不会被垃圾回收器回收掉
+
+字符串不可变什么意思？
+	双引号内的对象不可变，如：String a = "tyong";
+		a对象可变，但是 "tyong" 对象不可变
+
+String类为什么是不可变的？
+	  String类被finally修饰(这不是原因)，String类中有一个未指定长度byte[]数组(String可以表现出不用通过扩容来增加容量，
+	  而是通过输入的字符决定byte[]数组长度)，并且Java中数组一旦创建长度不可变，并且这个byte[]数组使用finally关键词修饰，
+	  因此这个byte[]数组还是不可变，<byte[]数组此时长度不可扩容、内容不可变>，进而使String类不可变；
+	  即 "abc" 不可以变成 "abg"。
+	  
+StringBuffer/StringBuilder类为什么是可变的？
+	    StringBuffer/StringBuilder类同样也被finally修饰(),StringBuffer类中又一个byte[]数组属性，容量默认为16，并且
+	    底层调用了数组扩容的方法System.arraycopy()(实际上是创建一个更大的数组，将原先的数组内的元素一个一个的拷入新数组，
+	    再将原数组销毁实现扩容)，在容量满时会自动进行扩容，并且这个byte[]数组未被finally关键字修饰。所以数组内的元素可以
+	  <此时这个byte[]数组可变，并且长度可扩容，内容可变>，进而使StringBuffer/StringBuilder类可变；
+	  即StringBuffer/StringBuilder适合大量的字符串拼接操作。

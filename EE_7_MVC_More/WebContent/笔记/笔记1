@@ -1,0 +1,5 @@
+MVC
+M:模型,各种功能,JavBean实现
+V:视图,页面的显示,与用户交互,jsp、html、css、jscript等实现
+C:控制器Controller,分发器,接受各种请求,将请求跳转到模型进行处理,处理完毕后再将处理结果返回到请求处,可以用jsp实现,但是推荐使用Servlet实现
+

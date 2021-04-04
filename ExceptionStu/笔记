@@ -1,0 +1,38 @@
+Java中的异常：Java共存在Error和Exception两种，此两者就是实现的Throwable接口，Throwable接口是继承的Object类
+
+Error: 错误。一旦发生，不可处理，程序只能终止，退出JVM;
+Exception: 异常。发生后可以处理;
+但是，Error和Exception都可以抛出;
+
+Error包括: VirtualMachineError(子类: StackOverflowError)、IOError、ThreadDeath、...等;
+Exception包括: 	ExceptionSubClass<非类名,而是Exception的直接子类，被称为编译时异常>,
+			所有ExceptionSubClass和它的直接子类都被称为编译时异常/受检异常/受控异常/CheckedException;
+				RuntimeException(子类: NullPointerException、ClassCastException、IllegalArgumentException(子类: NumberFormatException、...))、...,
+			所有RuntimeException和它的直接子类都被称为运行时异常/未受检异常/非受控异常/UnCheckedException;
+		
+编译时异常：编译时异常表示必须在编写程序的时候预先对这种异常进行处理，如果不处理编译器会报错，因此而得名编译时异常;
+运行时异常：运行时异常表示在编写程序阶段可以选择处理或不处理;
+编译时异常和运行时异常(即所有异常)都是发生在运行阶段的，编译阶段异常是不会发生的，因为异常的发生就是new异常对象;****************************************
+
+编译时异常和运行时异常的区别：
+	编译时异常发生的概率一般较高；运行时异常发生的概率一般较低
+	
+处理异常的两种方式：
+	1、在方法声明的位置使用throws关键字抛给上一级(调用者)，但是注意异常之后的代码块就无法执行了，
+		但是抛给上一级(调用者)后，上一级还要进行处理(任有两种方式：throws或者try {}catch() {})；
+	2、使用try {}catch() {} 语句进行异常的捕获处理，try内出异常的语句之后的代码就不执行了，而是直接执行catch(){}内的语句块，带执行完后，再向后执行try {}catch() {}外的代码；
+	3、总结：
+		(1)、一个方法内的代码出现异常，如果采用上报方式(throws)，异常之后的代码就不会执行了(可以理解为return掉了)
+		但是如果使用try {} catch() {}方式捕获解决掉，try{}内异常之后的代码就不会执行，而是转入catch(){}中，待catch(){}内的代码执行完毕后再向后执行代码块；
+		(2)、使用上报、try {}catch() {}两种方式处理异常时，可以处理本异常，也可以处理本异常的父异常；
+		(3)、try {}catch() {}内的catch(异常类的父类 异常类的父类对象)是借用多态实现的；
+		(4)、一个try {}后可以跟多个catch() {}进行特定的异常处理，建议把异常精确处理，而非直接调用异常类的父类或Exception类；
+		(5)、一个try {}后所跟的catch() {}处理异常为多个时，从上到下必须遵守从小到大(保证处理的异常唯一)，且唯一
+
+注意：Java异常发生之后如果一直上抛，最终会抛给main方法，main方法继续上抛给调用者JVM，JVM知道这个异常发生，只有一个结果，即终止Java程序；
+
+
+自定义异常的过程：
+	1、选择继承Exception(编译时异常)或者RuntimeException(运行时异常)
+	2、创建无参的构造方法和有参的构造方法
+	此时自定义异常就创建完成了！

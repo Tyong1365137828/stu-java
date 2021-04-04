@@ -1,0 +1,76 @@
+什么是IO？
+	I:Input；	O:Output；
+	通过IO可以完成文件的读和写；
+	
+IO流的分类：
+	多种分类方式：
+		方式一：按照流的方向分类，以内存作为参照物，往内存中去叫做 输入/读，从内存中出来叫做 输出/写；
+		
+		方式二：按照读取数据方式不同进行分类，有的流是按照字节的方式读取，一次读取一个字节byte，等同于一次读取8
+	个二进制位，这种流是万能的，什么流都能读取(包括文本文件、图片、声音、视频等等)，叫做字节流；
+		如：有一个普通文本文件 a.txt 内部有  ab普通123  数据，通过字符流是这样读的：
+			第一次读一个字节：正好读到：a；		第二次读一个字节，正好读到：b；	第三次读一个字节，正好读到：普 的一半；
+			第四次读一个字节，正好读到：普 的另外一半；	......
+			
+		方式三：按照字符的方式读取，一次读取一个字符，这种流是为了方便读取普通文本文件而存在的，这种流不能读取图
+	片、声音、视频等(甚至是word等文件都无法读取)，只能读取普通文本文件，叫做字符流；
+		如：有一个普通文本文件 a.txt 内部有  ab普通123  数据，通过字符流是这样读的：
+			第一次读取：a；		第二次读取：b；		第三次读取：普；		第四次读取：通；			第五次读取：1；
+			第六次读取：2；		第七次读取：3；
+		注意：字母、数字在windows系统中占用1个字节；汉字在windows系统中占用2个字节；
+		
+		方式四：
+		
+		综上所示流的分类包括：输入流、输出流、字节流、字符流
+		
+Java中的IO流都已经写好了，程序员不用关系底层，只要调用，Java所有的流都在java.io包下；
+
+JavaIO流的四大家族：Java中以 Stream结尾的都是字节流；以 Reader、Writer结尾的都是字符流！！！
+	四大家族的顶级类：
+		java.io.InputStream		字节输入流
+		java.io.OutputStream	字节输出流
+		java.io.Reader			字符输入流
+		java.io.Writer			字符输出流
+	上述的四大流的顶级类都是抽象类(InputStream、OutputStream、Reader、Writer都是抽象类)
+	
+	四个顶级流都实现了：
+		java.io.Closeable接口，因此《所有流》都是可关闭的，都实现了java.io.Closeable接口，《所有流》都有close()方法；
+		流是管道，所以所有流用完都要close()关闭不然会耗费很多资源；
+		
+	所有的输出类型的顶级流都实现了：
+		java.io.Flushable接口，因此《所有输出流》都是可刷新的，都实现了java.io.Flushable接口，《所有输出流》都有flush()方法；
+		输出流在最终输出之后，一定要flush()刷新一下，这个刷新表示将管道内剩余为输出的数据强行输出完(清空管道)，刷新的作用就是清空管道；
+		注意：如果没有flush()可能会导致丢数据；
+	
+	需要重点掌握的16个流：
+	
+		/**文件流专属*/
+		java.io.FileInputStream
+		java.io.FileOutputStream
+		java.io.FileReader
+		java.io.FileWriter
+		
+		/**转换流(将字节流转换为字符流的)*/
+		java.io.InputStreamReader
+		java.io.OutputStreamWriter
+		
+		/**缓冲流专属*/
+		java.io.BufferedReader
+		java.io.BufferedWriter
+		java.io.BufferedInputStream
+		java.io.BufferedOutputStream
+		
+		/**数据流专属*/
+		java.io.DataInputStream
+		java.io.DataOutputStream
+		
+		/**标准输出流*/
+		java.io.PrintWriter
+		java.io.PrintStream
+		
+		/**对象专属流*/
+		java.io.ObjectInputStream
+		java.io.ObjectOutputStream
+	
+	
+		

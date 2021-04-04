@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.hebeu.dao.ItemsDao">
+	
+	<resultMap type="items" id="itemsUserMap">
+		<id column="code" property="code"/>
+		<result column="name" property="name" />
+		<result column="user_account" property="user_account" />
+		<result column="price" property="price" />
+		<result column="quantity" property="quantity" />
+		<result column="evaluate" property="evaluate" />
+		<result column="src" property="src" />
+		
+		<association property="user" javaType="user">
+			<result column="address" property="address"/>
+			<result column="tel" property="tel"/>
+		</association>
+	
+	</resultMap>
+	
+	<!-- 模糊查询商品 -->
+	<select id="FindMulItems" parameterType="items" resultType="items">
+		SELECT 
+			* 
+		FROM 
+			items 
+		WHERE 
+			items.`name` LIKE concat('%',#{name},'%') 
+	</select>
+	
+	<!-- 全部商品信息查询 -->
+	<select id="FindAllItems" resultType="items">
+		SELECT 
+			* 
+		FROM 
+			items 
+	</select>
+	
+	<!-- 查询n到m条记录的商品信息 -->
+	<select id="findItemsByCount" parameterType="int" resultType="items">
+		SELECT
+			*
+		FROM
+			items
+		ORDER BY
+			items.`code`
+		LIMIT #{start} ,#{end} 
+	</select>
+	
+	<!-- 通过code展示商品 -->
+	<select id="findItemsByCode" parameterType="items" resultMap="itemsUserMap" >
+		SELECT
+			items.*, `user`.address,
+			`user`.tel
+		FROM
+			items,`user`
+		WHERE
+			items.user_account = `user`.account
+		AND `code` = #{code}
+	</select>
+
+</mapper>

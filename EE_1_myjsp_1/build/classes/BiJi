@@ -1,0 +1,153 @@
+一、SSM框架：1、Mybaits框架	2、Spring	框架	3、Spring MVC框架
+
+
+
+二、Java三个版本：ME SE EE
+JavaEE：是一个开发分布式企业级应用的规范和标准(WEB程序开发)
+作用：B/S架构下的WEB程序(即浏览器启动运行京东，新浪等)
+
+
+
+三、两种结构
+1、B/S(浏览器)的好处：
+	1)、只要开发服务器端的程序即可
+	2)、维护时只要维护服务器端即可
+
+2、C/S(客户端)的好处：
+	1)、客户端功能比浏览器强大
+	2)、客户端美观性可以更好
+
+
+
+四、学习过程：
+1、基础：JavaSE	Mysql/Oracle	JDBC
+2、做成：HTML	CSS	JS	BootStrap	Vue	JSP
+3、做好(分层)：Servlet	JavaBean		MVC架构
+4、又快又好：SSM(Spring	SpringMVC	Mybaits		Maven)
+5、更快更好：Redis Solr
+
+
+
+五、创建WEB工程：
+创建过程：选择好配置的服务器后Dybamic web module version选择3以上（3以上支持注释，3以下不支持注释）
+next之后出现的Default output folder：build\classes（最好不改名字），这个文件是用来存放JAVA源代码编译完成之后的内容，使其能够被"拿走"
+在next之后出现的Context root(发布的目录名字，可以更改)；Generate web.xml deployment ......(是配置文件)一般不选(因为最后还要去掉)
+
+
+
+六、WebContent\WEB-INF文件夹(此文件夹也是一个保密文件夹，前台人不能直接访问，必须采用重定向或者转发机制才能够访问)：web项目下的WebContent\WEB-INF文件夹是存放JAVA源代码编译后的生成内容(即build\classes);
+小技巧：添加jar包，mysql等类库时，可以直接拷贝到这个WebContent\WEB-INF\lib文件夹，会自动勾芡到apache tomcat中，省去了build path的繁琐步骤
+
+
+
+七、创建jsp文件：新建jsp文件是在WebContent文件夹下建立的，直接finsh完成建立，其与META-INF和WEB-INF文件夹平级
+也可以在WebContent文件夹下建立一个文件夹，在此文件夹中建立jsp文件，但注意此文件夹要与META-INF和WEB-INF文件夹平级
+
+浏览器访问jsp文件：如访问jsp文件时的地址http://127.0.0.1:8080/ZuoYe1/index.jsp，其中127.0.0.1为域名，后接:加端口号(默认是8080)，再接工程名加jsp文件名(不用跟WebContent文件夹，但是注意其下面的文件夹要带上)
+
+
+
+八、动态网页与静态网页：动态网页并非是"动的"，而是从数据库来的数据。比如新浪网页的公告，信息
+创建动态网页技术：1、jsp技术		2、php技术	3、
+
+
+
+九、本工作空间的Servers项目的server.xml文件：
+1、在Connector的connectionTimeout表示连接的超时限(默认20000)	port表示端口号(默认8080)	protocol表示协议版本(默认HTTP/1.1)	redirectPort表示重定向端口(默认为8443)https
+
+2、webapps就是一个虚拟路径，因为在安装tomcat的目录中，conf文件夹里的server.xml文件里<Enqine>标签里的<Host>标签中可见代码:
+<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+
+        <!-- SingleSignOn valve, share authentication between web applications
+             Documentation at: /docs/config/valve.html -->
+        <!--
+        <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
+        -->
+
+        <!-- Access log processes all example.
+             Documentation at: /docs/config/valve.html
+             Note: The pattern used is equivalent to using pattern="common" -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
+
+      </Host>
+则由appBase="webapps"和name="localhost"可知本地的虚拟路径为"webapps"
+
+
+
+十、发布web工程的方法：
+1、直接拷贝该工程的WebContent，放入与eclipse没有关系的Tomcat的webapps中并重命名，启动tomcat服务器即可
+
+2、打包成war包，右击要发布的web工程，选择export，在web中选择WAR file，next后点击Browse...选择
+放在何处后Finish，之后将此war包放入Tomcat的webapps中，tomcat会自动解压，然后启动服务器即可
+
+3、直接点击Tomcat的conf文件夹，进入后点击server.xml文件，
+修改<HOST的Context的标签：
+<Context path="/发布路径(即是浏览器url的访问路径，默认是开发目录，可以修改)"	docBase="哪个盘:\直至发布工程名\WebContent"	reloadable="true">
+			</Context>
+			
+4、把web项目发布到webapps以外的目录，用虚拟路径即可解决
+方法一、在tomcat中的/conf/server.xml文件中，<Host>后，</Host>标签前添加如下代码:
+代码:"<Context docBase="" path=""		/>"
+例如:"<Context    docBase="D:\Tomcat\test"    path="/tyong"    />"
+其中：
+	1)、docBase：项目名，即实际路径(项目<即看到WebContent/WebROOT目录的那一级,或者是WebContent/WebROOT目录>的实际发布目录)
+	
+	2)、path：发布路径，严格来讲是虚拟路径(可以写绝对路径或者相对路径，)，
+	即是浏览器url的访问路径(默认是开发目录，可以修改)
+		1>、绝对路径写法:"tomcat的webapps路径\发布路径名称"(注意"\",发布路径名称可以随意起名字)
+		2>、相对路径写法(相对于webapps目录):"/发布路径名称"(注意"/",,发布路径名称可以随意起名字),推荐用此写法
+		访问搜索:"http://127.0.0.1:8080/发布路径名称/工程中需要访问的前台文件夹和文件名"
+		但是此方式配置好之后需要重启服务器才能生效；
+	3)、项目：即看到WebContent/WebROOT目录的那一级,或者是WebContent/WebROOT目录(即看到WEB-INF的那一级)，但最好是拷贝WebContent/WebROOT目录，然后对其重命名即可使用
+
+方法二、在tomcat中的/conf/Catalina/目录下新建文本文档，并在里面写入代码:"<Context docBase="" 	path=""		/>"，格式参照方法一即可
+注意文本文档的格式是:"项目名.xml"
+访问搜索:"http://127.0.0.1:8080/发布路径名称/工程中需要访问的前台文件夹和文件名"
+此方式配置好后不用重启即可生效
+
+方法三、ROOT映射法(一般不使用)
+在tomcat中的/conf/Catalina/目录下新建文本文档，并在里面写入代码:"<Context docBase="" 	path=""		/>"，格式参照方法一即可
+注意文本文档的格式是:"ROOT.xml"
+访问搜索:"http://127.0.0.1:8080/工程中需要访问的前台文件夹和文件名"
+
+这三种方法不能混合使用!!!!
+
+
+
+十一、web.xml文件
+内部代码:
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+前三行表示如果有名为index名字的前台文件，直接写工程名即可不用写此文件，会自动把这6行遍历直至找的index前台文件
+这六行表示可以给更改为你想直接访问的名字(直接到工程名即可)
+
+
+
+十二、eclipse一直弹出waiting弹窗卡死解决：
+1、强行关闭eclipse，关闭所有工程
+2、电脑关机重启
+3、点击eclipse并进入刚才卡死的工程，随便输入一个字母，出现弹窗后不要操作，等待弹窗消失后即可
+
+
+
+十三、虚拟主机
+如通过"****"访问到主机(127.0.0.1)等等一些意想不到的结果
+
+过程:
+1、在本机以管理员进入cmd，输入"notepad"命令，选择文件，点击打开"C:\Windows\System32\drivers\etc"，把"文本文档"变为"所有文件"，
+选择hosts文件，在"# localhost name resolution is handled within DNS itself."行下，参照其行下的内容输入
+"127.0.0.1	<Host>标签的name的值"，注意不带"#"
+
+2、配置文件"server.xml"的<Enqine>标签里，添加一个<Host>标签，并填入代码：
+<Host appBase="要访问项目的实际路径" name="随意定义一个虚拟路径作为虚拟主机" >
+	<Context docBase="与appBase一样，为要访问项目的实际路径" path="/" />
+</Host>
+
+3、再把"		<Engine defaultHost="localhost"		"改成<Host>标签的name的值
+
+访问：访问"http://(前面的协议内容也可以不写)name的值:端口号("80"可以省略不写)/path值("/"可以省略不写)"，即可访问到本机项目资源
+注意:如果端口不是"8080",则要在访问"name的值"后加":端口号"

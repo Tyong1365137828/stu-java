@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace命名空间，作用就是对sql进行分类化管理，理解为sql隔离
+注意：如果使用mapper代理方式�?发，namespace就有重要的特殊意义�??
+ -->
+<mapper namespace="test">
+  <!-- 在映射文件中写sql语句 -->
+  <!-- id用于标识sql，称为statement的id，将sql语句封装到mapperStatement对象�? -->
+  
+   <select id="findUserById" parameterType="String" resultType="edu.hebeu.po.User">
+     <!-- select * from webuser where userid=1 ? #{}表示�?个点位符-->
+     <!-- parameterType指定输入参数的类型，这里指定String型，也可是int�? 
+     #{id}：id表示接收输入的参数，是输入参数名称，如果是简单类型，名称可任意，如value
+     resultType：指定输出结果的类型，select指定resultType表示将单条记录映射成的java对象
+     -->
+      select * from webuser where userid=#{id}
+    </select>
+    <!-- 按照姓名模糊查询 ，可能返回多条记�?  resultType表示的单条记录类�?-->
+    <select id="findUserByName" parameterType="java.lang.String" resultType="edu.hebeu.po.User">
+    <!--  select * from webuser where username like '%�?%' -->
+    <!--  select * from webuser where username like #{value} -->
+    <!--${}：表示拼接sql串，将接收到参数的内容不加任何修饰拼接到sql�?-->
+     select * from webuser where username like '%${value}%' 
+     <!-- ${}存在sql注入问题，如注入 'or 1=1 or' '%'or 1=1 or'%'  -->
+     <!-- ${value}：接收输入的参数，如果输入参数是�?单类型，只能使用value  -->
+    </select>
+    
+     <!-- 按照姓名模糊查询 -->
+    <select id="findUserByUserName" parameterType="java.lang.String" resultType="edu.hebeu.po.User">
+        select * from webuser where username like concat('%',#{username},'%') 
+    </select>
+    
+     <select id="findUserAll"  resultType="edu.hebeu.po.User">
+        select * from webuser  
+    </select>
+    
+    <!-- 按照姓名、年龄等多条件查�? -->
+    <select id="findUserByNameAndAge" parameterType="edu.hebeu.po.User" resultType="edu.hebeu.po.User">
+        select * from webuser where username like concat('%',#{username},'%') and age>=#{age}
+    </select>
+    <!-- 添加用户 
+    parameterType：指定输入参数是pojo类型（包括用户信息）
+    #{}中指定pojo的属性名，接收到pojo的属性�?��?�mybatis通过ognl获取对象的属性�??
+         注意：sql结尾不能加分�?;
+    id是自增字段，不用写的
+    -->
+    <insert id="insertUser" parameterType="edu.hebeu.po.User" >
+       <!-- 
+                 刚插入数据的主键返回，返回至user对象�?
+       select last_insert_id()：刚得到insert进去记录的主键�?�，只�?�用于自增主�?
+       keyProperty：将查询到的值设定到parameterType指定的对象中那个属�??
+       order�?  select last_insert_id()的执行顺序，相对于insert的执行顺�? 
+       resultType：指定查询结果类�?     
+        -->
+       
+       <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+        insert into webuser(userid,username,password,age,entrydate) value(#{userid},#{username},#{password},#{age},#{entrydate})
+    </insert>
+    
+     <insert id="insertUser1" parameterType="edu.hebeu.po.User"  >
+     <!-- 先�?�过uuid()查询到主键，将主键输入到sql语句�? -->
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+            select uuid()
+        </selectKey>
+        insert into webuser(id,userid,username,age,entrydate) values(#{id},#{userid},#{username},#{age},#{entrydate})
+    </insert>
+    
+    <delete id="deleteUser" parameterType="java.lang.String">
+          delete from webuser where userid=#{userid}
+    </delete>
+    
+    <!-- 按照userid进行修改数据，需要传入userid和修改信息，输入参数为user对象 -->
+    <update id="updateUser" parameterType="edu.hebeu.po.User">
+        update webuser set username=#{username},password=#{password},age=#{age} where userid=#{userid}
+    </update>
+    
+</mapper>

@@ -1,0 +1,18 @@
+分三步：
+1、控制层：获取当前页页号
+      修改findAllUserServlet.java 
+      将当前页号给PageBean
+      传递PageBean到业务层（为其它属性赋值）
+2、业务层：获取记录总数；初始化PageBean的各参数值；调用数据访问层获取当前面数据。业务层搞定所有的属性。
+3、DAO层：分页查询语句 ，搞定list数据
+
+http://127.0.0.1:8080/loginservlet003-03-page/servlet/FindAllUserServlet?index=2
+
+4、视图层pagefindUser.jsp
+           <tr>
+             <td colspan="9" align="center">
+                                              首页   上一页   [1] 2 3 4 5 下一页   末页    每页  记录    共23条记录   
+             </td>
+           </tr>
+    循环numbers， 列出页号，链接到servlet/FindAllUserServlet?index=2,2改为---number变量 
+    判断当前面

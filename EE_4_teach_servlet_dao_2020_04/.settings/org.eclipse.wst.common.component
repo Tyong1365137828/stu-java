@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
+    <wb-module deploy-name="_servlet_2020_03">
+                
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+                
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+                
+        <property name="java-output-path" value="/_servlet_2020_03/build/classes"/>
+        <property name="context-root" value="EE_4_teach_servlet_dao_2020_04"/>
+            
+    </wb-module>
+    
+</project-modules>

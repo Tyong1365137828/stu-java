@@ -1,0 +1,32 @@
+反射机制：通过Java语言的反射机制可以操作字节码文件(读和修改字节码文件)；
+	作用：
+		通过Java语言的反射机制可以操作字节码文件(读和修改字节码文件)；即操作代码片段(class文件)，让程序更加灵活；
+	在哪个包下：
+		java.lang.reflect.*
+	反射机制相关的重要类有哪些？
+		java.lang.Class // 代表整个字节码，代表一个类型，代表整个类
+		
+		java.lang.reflect.Constructor // 代表字节码中的构造方法字节码，代表类中的构造方法
+		
+		java.lang.reflect.Field // 代表字节码中的属性字节码，代表类中的属性(成员变量)即包括静态变量和实例变量
+		
+		java.lang.reflect.Method // 代表字节码中的方法字节码，代表类中的方法
+		
+		如：
+		public class User { // java.lang.Class
+		
+			// java.lang.reflect.Field
+			private String num;
+			
+			// java.lang.reflect.Constructor
+			public User() {}
+			// java.lang.reflect.Constructor
+			public User(String num) {
+				this.num = num;
+			}
+			
+			// java.lang.reflect.Method
+			public void doSome() {
+				System.out.println("我是一个方法");
+			}
+		}

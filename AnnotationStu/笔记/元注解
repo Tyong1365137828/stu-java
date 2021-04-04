@@ -1,0 +1,45 @@
+什么是元注解？
+	用来标注 "注解类型" 的 "注解" 称为 "元注解" 
+	
+常见的元注解：
+	Target
+	Retention
+	
+关于Target注解：
+	这是一个元注解，即标注 "注解类型" 的 "注解" ；
+	Target注解用来标注 "被标注的注解" 可以出现在哪些位置；
+	如：
+		@Target(ElementType.METHOD)
+		public @interface Override {
+		}
+		此时，Target就是元注解，Override是标注注解；这个例子表示Override注解只能出现在方法上；
+	出现在哪？
+		@Target(CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, MODULE, PARAMETER, TYPE)
+		依次表示 "被标识的注解" 可以出现在 构造方法、属性、局部变量、方法、包、模块、参数、类上
+	
+关于Retention注解：
+	这是一个元注解，即标注 "注解类型" 的 "注解" ；
+	Retention注解用来标注 "被标注的注解" 最终保存到哪；
+	如：
+		@Retention(RetentionPolicy.SOURCE)
+		public @interface Override {
+		}
+		此时Retention就是元注解，Override是标注注解，这个例子表示Override注解保存在Java源文件中
+	保持性策略：
+		@Retention(RetentionPolicy.SOURCE) 表示 "被标注的注解" 被保存至Java源文件中
+		@Retention(RetentionPolicy.CLASS) 表示 "被标注的注解" 被保存在class文件中
+		@Retention(RetentionPolicy.RUNTIME) 表示 "被标注的注解" 被保存在class文件中，并且可以被反射机制所读取到
+		
+
+元注解Retention的源代码分析:
+		public @interface Retention {
+			RetentionPolicy value(); // 名为 vaule，类型为 Retention的枚举类型 的属性
+		}
+		
+		// RetentionPolicy的源码
+		public enum RetentionPolicy {
+			SOURCE,
+			CLASS,
+			RUNTIME
+		}
+		

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>EE_3_myservlet_1</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!--在整个web容器设置初始化参数,无论是Servlet2.5还是Servlet3.0都必须要用这种方法 -->
+  <context-param>
+    <param-name>ServletAllGloabParam</param-name>
+    <param-value>ServletAllGloabValue</param-value>
+  </context-param>
+  
+   <servlet>
+    <servlet-name>suibianxie</servlet-name>
+    <servlet-class>edu.hebeu.servlet.Servlet25</servlet-class>
+    
+     <!--(Servlet2.5方法)对当前的Servlet设置初始化参数-->
+     <init-param>
+       <param-name>Servlet25Param</param-name>
+       <param-value>Servlet25Value</param-value>
+     </init-param>
+     
+    <load-on-startup>1</load-on-startup><!-- 在Tomcat启动时自动执行Servlet2.5的init()方法(初始化)-->
+   </servlet>
+  <servlet-mapping>
+    <servlet-name>suibianxie</servlet-name>
+    <url-pattern>/Servlet25Test</url-pattern>
+  </servlet-mapping>
+</web-app>
