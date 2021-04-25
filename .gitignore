@@ -1,1 +1,8 @@
 /.metadata/
+*/.metadata/
+*/.settings/
+*/bin/
+*/build/
+*/.classpath
+*/.project
+*/.gitignore

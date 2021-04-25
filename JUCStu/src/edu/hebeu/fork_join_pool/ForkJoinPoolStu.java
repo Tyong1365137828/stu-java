@@ -25,7 +25,7 @@ public class ForkJoinPoolStu {
 	public static void main(String[] args) {
 		
 		long startComputer = 0L;
-		long endComputer = 60000000000L; // 600亿
+		long endComputer = 600000000000L; // 600亿
 		
 		traditionTest(startComputer, endComputer); // 传统的计算——————————42169ms
 		System.out.println("-----------------------------------------------------");
